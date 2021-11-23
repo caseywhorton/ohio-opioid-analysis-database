@@ -4,7 +4,10 @@ Photo by <a href="https://unsplash.com/@towfiqu999999?utm_source=unsplash&utm_me
 
 # ohio-opioid-analysis-database
 ---
-WHAT IS THIS REPO AND PROJECT ALL ABOUT?
+
+This project and repository is designed to gather data from several sources thought to be relevant to analyzing the prescription of opioids in Ohio between the years of 2006 and 2014. The over-consumption, addiction and unfortunate fatal overdoses due to opioid prescription is a problem in the United States. The problem is so pervasive that it is often referred to as the "opioid epidemic" and has received national attention. Differences in opioid prescription rates and overdoses may differ between areas of the country and even areas of an individual state. In this project, I gather data for the state of Ohio, transform it, and load it to a relational database that can be used for analysis.
+
+_This project also served as my capstone project for the [Data Engineer Nanodegree Program by Udacity](https://www.udacity.com/course/data-engineer-nanodegree--nd027?utm_source=gsem_brand&utm_medium=ads_r&utm_campaign=12712960793_c&utm_term=124530938590&utm_keyword=data%20engineer%20nanodegree_e&gclid=CjwKCAiAv_KMBhAzEiwAs-rX1PQVZVeGVHV9K34bBP2kNb1yqeq2WbRh4vt4oG1AKDVWN1VPJPEKDhoCZSkQAvD_BwE)_.
 
 # Installation & Setup
 
@@ -25,9 +28,9 @@ Custom modules:
 
 ## Amazon S3
 
-All input data is stored in S3 (Simple Storage Service) in JSON format.
+All input data is stored in S3 (Simple Storage Service).
 
-**S3 files (us-west-2)**
+**S3 files (us-west-2)**  
 + county raw data: s3://.../county_raw.tsv.gz
   + Run the get_ohio_county_raw_data.py file to gather the dataframe and save as a zipped file
 + Bureau of labor statistics files (with links)
@@ -82,12 +85,6 @@ Status updates and any error information will show up in the terminal. If the en
 
 # Data sources
 
-## OpenSecrets Excel File
-
-[Visit this link to download the file](https://www.opensecrets.org/open-data/api-documentation)
-
-Upload the excel file for the dimension and fact tables
-
 ## OpenSecrets
 
 **Tables**
@@ -110,13 +107,23 @@ _This project uses 3 API calls:_
 
 ## US Bureau of Labor Statiscs
 
+[Getting started with Bureau of labor statistics API](https://stats.bls.gov/developers/)
+
 **API**
 
 [State and County Employment and Wages from Quarterly Census of Employment and Wages](https://stats.bls.gov/help/hlpforma.htm#EN)
 
 ## DEA Arcos Dataset
 
+A nationwide analysis was written about by the Washington Post [in this article](https://www.washingtonpost.com/graphics/2019/investigations/dea-pain-pill-database/#download-resources). 
+
+https://www.deadiversion.usdoj.gov/arcos/index.html
+
+
+
 **arcospy**
+
+
 
 [arcospy API documentation](https://pypi.org/project/arcospy/)  
 [Getting started with the acrospy API](https://github.com/jeffcsauer/arcospy/blob/master/docs/Getting%20up%20and%20running%20-%20examining%20pharmacy%20patterns.ipynb) 
