@@ -90,13 +90,15 @@ References:
 [Individual Series ID formats for Bureau of labor statistics API](https://stats.bls.gov/help/hlpforma.htm#LA)  
 [arcospy API documentation](https://pypi.org/project/arcospy/)  
 [Getting started with the acrospy API](https://github.com/jeffcsauer/arcospy/blob/master/docs/Getting%20up%20and%20running%20-%20examining%20pharmacy%20patterns.ipynb)  
-[openSecrets API documentation](https://www.opensecrets.org/open-data/api-documentation)
+[openSecrets API documentation](https://www.opensecrets.org/open-data/api-documentation)  
 [crediting openSecrets](https://www.opensecrets.org/open-data/credit-opensecrets)  
 
 
 # Data sources
 
 ## OpenSecrets Excel File
+
+[Visit this link to download the file](https://www.opensecrets.org/open-data/api-documentation)
 
 Upload the excel file for the dimension and fact tables
 
@@ -105,10 +107,16 @@ Upload the excel file for the dimension and fact tables
 **Tables**
 
 **API**
+[Getting started with the acrospy API](https://github.com/jeffcsauer/arcospy/blob/master/docs/Getting%20up%20and%20running%20-%20examining%20pharmacy%20patterns.ipynb)  
+[openSecrets API documentation](https://www.opensecrets.org/open-data/api-documentation)  
 
-+ candindbyind
-+ candsummary
-+ candcontrib
+_This project uses 3 API calls:_  
++ candindbyind: Provides total contributed to specified candidate from specified industry
+  + Link: https://www.opensecrets.org/api/?method=candIndByInd&output=doc
++ candsummary: Provides summary fundraising information for specified politician
+  + Link: https://www.opensecrets.org/api/?method=candSummary&output=doc
++ candcontrib: Returns top contributors to specified candidate for a House or Senate seat or member of Congress
+  + Link: https://www.opensecrets.org/api/?method=candContrib&output=doc
 
 ## US Bureau of Labor Statiscs
 
