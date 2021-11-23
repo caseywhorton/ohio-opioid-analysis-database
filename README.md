@@ -29,12 +29,13 @@ All input data is stored in S3 (Simple Storage Service) in JSON format.
 
 **S3 files (us-west-2)**
 + county raw data: s3://.../county_raw.tsv.gz
-+ Bureau of labor statistics dimension files:
-  + cu.item.txt
-  + cw.area.txt
-  + la.area_type.txt
-  + la.area.txt
-  + la.measure.txt
+  + Run the get_ohio_county_raw_data.py file to gather the dataframe and save as a zipped file
++ Bureau of labor statistics files (with links)
+  + [la.area.txt](https://download.bls.gov/pub/time.series/la/la.area)
+  + [la.area_type.txt](https://download.bls.gov/pub/time.series/la/la.area_type)
+  + [cu.item.txt](https://download.bls.gov/pub/time.series/cu/cu.item)
+  + [cw.area.txt](https://download.bls.gov/pub/time.series/cu/cu.area)
+  + [la.measure.txt](https://download.bls.gov/pub/time.series/la/la.measure)
 + openSecrets file
   + [Visit this link to download the file](https://www.opensecrets.org/open-data/api-documentation)
 
@@ -80,13 +81,8 @@ Status updates and any error information will show up in the terminal. If the en
 + helper.py
 + sql_queries.py
 + config.yaml
-+ county_raw.tsv.gz
-+ bureau of labor statistics files (with links)
-  + [la.area.txt](https://download.bls.gov/pub/time.series/la/la.area)
-  + [la.area_type.txt](https://download.bls.gov/pub/time.series/la/la.area_type)
-  + [cu.item.txt](https://download.bls.gov/pub/time.series/cu/cu.item)
-  + [cw.area.txt](https://download.bls.gov/pub/time.series/cu/cu.area)
-  + [la.measure.txt](https://download.bls.gov/pub/time.series/la/la.measure)
++ get_ohio_county_raw_data.py
++ images/
 
 References:
 
