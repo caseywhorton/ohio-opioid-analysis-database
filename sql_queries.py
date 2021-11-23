@@ -37,7 +37,6 @@ where left(distidrunfor,2) = 'OH' and right(metadata_sheet,4) between 2006 and 2
 create_table_candcontrib = """
 create table if not exists candcontrib
 (
-    cand_name varchar NOT NULL,
     cid varchar NOT NULL,
     cycle int,
     origin varchar,
@@ -137,7 +136,8 @@ create table if not exists ohio_county
 (
     BUYER_COUNTY varchar,
     BUYER_STATE char(2),
-    countyfips int
+    countyfips int,
+    PRIMARY KEY (countyfips)
 )
 """
 
@@ -149,7 +149,8 @@ create table if not exists county_pop
     COUNTY int,
     variable varchar,
     year varchar,
-    population int
+    population int,
+    CONSTRAINT fk_countyfips FOREIGN KEY (countyfips) REFERENCES ohio_county(countyfips)
 );
 """
 
@@ -214,7 +215,6 @@ create table if not exists expenditure_codes
 create_table_candIndByInd = """
 create table if not exists candIndbyInd
 (
-    cand_name varchar NOT NULL,
     cid varchar NOT NULL,
     cycle int,
     industry varchar,
@@ -234,7 +234,6 @@ create table if not exists candIndbyInd
 create_table_candsummary = """
 create table if not exists candsummary
 (
-    cand_name varchar NOT NULL,
     cid varchar NOT NULL,
     cycle varchar,
     state varchar,
@@ -270,7 +269,8 @@ create table if not exists cw_area
    area_name varchar,
    display_level varchar,
    selectable varchar,
-   sort_sequence int
+   sort_sequence int,
+   PRIMARY KEY(area_code)
 )
 """
 
@@ -281,7 +281,8 @@ create table if not exists cu_item
    item_name varchar,
    display_level varchar,
    selectable varchar,
-   sort_sequence int
+   sort_sequence int,
+   PRIMARY KEY (item_code)
 )
 """
 
@@ -293,7 +294,9 @@ create table if not exists la_area
    area_text varchar,
    display_level varchar,
    selectable varchar,
-   sort_sequence int
+   sort_sequence int,
+   PRIMARY KEY (area_code),
+   CONSTRAINT fk_la_area_type FOREIGN KEY (area_type_code) REFERENCES la_area_type(area_type_code),
 )
 """
 
@@ -301,7 +304,8 @@ create_table_la_area_type = """
 create table if not exists la_area_type
 (
    area_type_code char(1),
-   areatype_text varchar
+   areatype_text varchar,
+   PRIMARY KEY (area_type_code)
 )
 """
 
@@ -309,7 +313,8 @@ create_table_la_measure = """
 create table if not exists la_measure
 (
    measure_code char(2),
-   measure_text varchar
+   measure_text varchar,
+   PRIMARY KEY (measure_code)
 )
 """
 
@@ -338,20 +343,20 @@ region 'us-west-2';
 # insert table statements
 ##############################################
 insert_table_candindbyind = """
-INSERT INTO candindbyind (cand_name, cid, cycle, industry, chamber, party, state,
+INSERT INTO candindbyind (cid, cycle, industry, chamber, party, state,
        total, indivs, pacs, rank, origin, source, last_updated)
-VALUES (%s,%s ,%s ,%s,%s,%s,%s,%s,%s ,%s ,%s ,%s , %s, %s)
+VALUES (%s ,%s ,%s,%s,%s,%s,%s,%s ,%s ,%s ,%s , %s, %s)
 """
 
 insert_table_candsummary = """
-INSERT INTO candsummary (cand_name, cid, cycle, state, party, chamber, first_elected,
+INSERT INTO candsummary (cid, cycle, state, party, chamber, first_elected,
        next_election, total, spent, cash_on_hand, debt, origin, source, last_updated)
-VALUES (%s,%s ,%s ,%s, %s, %s, %s, %s, %s ,%s ,%s ,%s , %s, %s, %s)
+VALUES (%s ,%s ,%s, %s, %s, %s, %s, %s ,%s ,%s ,%s , %s, %s, %s)
 """
 
 insert_table_candcontrib = """
-INSERT INTO candcontrib (cand_name, cid, cycle, origin, source, notice, org_name, total, pacs, indivs)
-VALUES (%s, %s ,%s , %s, %s, %s, %s, %s, %s, %s)
+INSERT INTO candcontrib (cid, cycle, origin, source, notice, org_name, total, pacs, indivs)
+VALUES (%s ,%s , %s, %s, %s, %s, %s, %s, %s)
 """
 
 insert_table_ohio_county = """
