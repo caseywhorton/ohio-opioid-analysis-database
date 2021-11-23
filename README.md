@@ -4,6 +4,19 @@ Photo by <a href="https://unsplash.com/@towfiqu999999?utm_source=unsplash&utm_me
 
 # ohio-opioid-analysis-database
 
+# Installation
+
+# Usage
+
+`~ python etl.py config.yaml`
+
+# Files
+
++ etl.py
++ helper.py
++ sql_queries.py
++ config.yaml
+
 # Data sources
 
 ## OpenSecrets Excel File
@@ -23,6 +36,10 @@ State and County Employment and Wages from Quarterly Census of Employment and Wa
 
 ## DEA Arcos Dataset
 
-Large 1TB database
-
 **arcospy**
+
+## ETL Process
+
+## Database Design Schema
+
+
