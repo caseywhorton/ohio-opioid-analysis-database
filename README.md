@@ -5,22 +5,26 @@ Photo by <a href="https://unsplash.com/@towfiqu999999?utm_source=unsplash&utm_me
 # ohio-opioid-analysis-database
 ---
 
-This project and repository is designed to gather data from several sources thought to be relevant to analyzing the prescription of opioids in Ohio between the years of 2006 and 2014. The over-consumption, addiction and unfortunate fatal overdoses due to opioid prescription is a problem in the United States. The problem is so pervasive that it is often referred to as the "opioid epidemic" and has received national attention. Differences in opioid prescription rates and overdoses may differ between areas of the country and even areas of an individual state. In this project, I gather data for the state of Ohio, transform it, and load it to a relational database that can be used for analysis.
+This project and repository is designed to gather data from several sources thought to be relevant to analyzing the prescription of opioids in Ohio between the years of 2006 and 2014. The over-consumption, addiction and unfortunate fatal overdoses due to opioid abuse is a problem in the United States. The problem is so pervasive that it is often referred to as the "opioid epidemic" and has received national attention and even been declared [a public health emergency by the Department of Health and Human Services (HHS)](https://www.hhs.gov/opioids/about-the-epidemic/index.html). Differences in opioid prescription rates and overdoses may differ between areas of the country and even areas of an individual state. In this project, I gather data at the county level for the state of Ohio, transform it, and load it to a relational database that can be used in analysis. Pairing the information from this database with other data sources can lead to more insights over time.
+
+Reference: https://www.hhs.gov/opioids/about-the-epidemic/index.html
 
 _This project also served as my capstone project for the [Data Engineer Nanodegree Program by Udacity](https://www.udacity.com/course/data-engineer-nanodegree--nd027?utm_source=gsem_brand&utm_medium=ads_r&utm_campaign=12712960793_c&utm_term=124530938590&utm_keyword=data%20engineer%20nanodegree_e&gclid=CjwKCAiAv_KMBhAzEiwAs-rX1PQVZVeGVHV9K34bBP2kNb1yqeq2WbRh4vt4oG1AKDVWN1VPJPEKDhoCZSkQAvD_BwE)_.
 
 # Installation & Setup
 
-This project used python version 3.8.5, which can be installed through the `pip` package manager or Anaconda. To learn more about getting started with python on your machine [visit this link](https://python.org). To learn more about Anaconda, please [visit this link](https://www.anaconda.com).
+This project used python version 3.8.5, which can be installed through the `pip` package manager or Anaconda using `conda`. To learn more about getting started with python on your machine [visit this link](https://python.org). To learn more about Anaconda, please [visit this link](https://www.anaconda.com).
 
 Required packages:
 
-`pandas == 1.2.4`  
-`boto3 == 1.20.3`  
-`psycopg2 == 2.9.2`  
-`argparse == 1.1`  
-`yaml == 5.4.1`  
-`tqdm == 5.49.0`
+```
+pandas == 1.2.4  
+boto3 == 1.20.3  
+psycopg2 == 2.9.2  
+argparse == 1.1  
+yaml == 5.4.1  
+tqdm == 5.49.0
+```
 
 Custom modules:
 + helper.py
@@ -28,11 +32,12 @@ Custom modules:
 
 ## Amazon S3
 
-All input data is stored in S3 (Simple Storage Service).
+Some input data is stored in S3 (Simple Storage Service).
 
 **S3 files (us-west-2)**  
 + county raw data: s3://.../county_raw.tsv.gz
   + Run the get_ohio_county_raw_data.py file to gather the dataframe and save as a zipped file
+  + Save this file to a bucket on S3
 + Bureau of labor statistics files (with links)
   + [la.area.txt](https://download.bls.gov/pub/time.series/la/la.area)
   + [la.area_type.txt](https://download.bls.gov/pub/time.series/la/la.area_type)
@@ -70,7 +75,7 @@ The files in the repo should all be saved to the same directory. After navigatin
 
 `~ python etl.py config.yaml`
 
-Status updates and any error information will show up in the terminal. If the entire program runs without issue, you should see something like image below:
+Status updates and any error information will show up in the terminal. If the entire program runs without issue, you should see something like the image below:
 
 <img src="images/completed_program.PNG" width="800" height="300">
 
@@ -94,9 +99,6 @@ Reference: https://www.opensecrets.org/open-data/api-documentation
 
 **API**  
 
-[Getting started with the acrospy API](https://github.com/jeffcsauer/arcospy/blob/master/docs/Getting%20up%20and%20running%20-%20examining%20pharmacy%20patterns.ipynb)  
-[openSecrets API documentation](https://www.opensecrets.org/open-data/api-documentation)  
-
 _This project uses 3 API calls:_  
 + candindbyind: Provides total contributed to specified candidate from specified industry
   + Link: https://www.opensecrets.org/api/?method=candIndByInd&output=doc
@@ -105,26 +107,26 @@ _This project uses 3 API calls:_
 + candcontrib: Returns top contributors to specified candidate for a House or Senate seat or member of Congress
   + Link: https://www.opensecrets.org/api/?method=candContrib&output=doc
 
-## US Bureau of Labor Statiscs
+## US Bureau of Labor Statistics
 
-[Getting started with Bureau of labor statistics API](https://stats.bls.gov/developers/)
+The US Bureau of Labor Statistics (BLS) is part of the United States Department of Labor, and [serves to gather data and facts about the US labor market](https://en.wikipedia.org/wiki/Bureau_of_Labor_Statistics). The BLS [hosts a public data API](https://stats.bls.gov/developers/) intended for use by developers and programmers to use their data. The API is very robust and offers much more than what is used in this project.
 
 **API**
 
+Currently, this project aims to see the relationship between employment and opioid prescriptions by county. The API is called for county-level unemployment information between the years of 2006 and 2014. See the link below to read more about this specific API call and the remaining options hosted by the BLS:  
 [State and County Employment and Wages from Quarterly Census of Employment and Wages](https://stats.bls.gov/help/hlpforma.htm#EN)
 
 ## DEA Arcos Dataset
 
-A nationwide analysis was written about by the Washington Post [in this article](https://www.washingtonpost.com/graphics/2019/investigations/dea-pain-pill-database/#download-resources). 
+A nationwide analysis was written about this dataset by the Washington Post [in this article](https://www.washingtonpost.com/graphics/2019/investigations/dea-pain-pill-database/#download-resources). Reading this article lead me to reading more about the Drug Enforcement Administration's (DEA) efforts to combat the opioid crisis. The data from ARCOS is available via an API simply called `arcos`. `arcos` was originally written in the R programming language, and in 2019 an effort was made by the University of Maryland to make it available via Python ([Reference](https://pypi.org/project/arcospy/)), the Python version is called `arcospy`.
 
-https://www.deadiversion.usdoj.gov/arcos/index.html
-
-
+Link to DEA website: https://www.deadiversion.usdoj.gov/arcos/index.html
 
 **arcospy**
 
+This API has many defined functions that call and return data. Not all of the defined functions from the package are used in this project, and during development I had consistent issues with the package's use. The defined functions were copied into the `helper` module I have written with minor changes, [all credit goes to the original writers of this code](https://github.com/jeffcsauer).  
 
-
+More Links:  
 [arcospy API documentation](https://pypi.org/project/arcospy/)  
 [Getting started with the acrospy API](https://github.com/jeffcsauer/arcospy/blob/master/docs/Getting%20up%20and%20running%20-%20examining%20pharmacy%20patterns.ipynb) 
 
@@ -145,7 +147,7 @@ Connect to Redshift >> Drop tables >> Create tables >> Copy from S3 to Redshift 
 
 # Database Design Schema
 
-**candcontrib**
+**candcontrib**: Top contributors to a candidate during a cycle.
 
 Type | Column | Type
 -----|--------|------
@@ -160,7 +162,7 @@ null | pacs | int,
 null | indivs | int
 
 
-**candIndbyInd**
+**candIndbyInd**: Contributions to a candidate during a cycle from a given industry. Here the industry is the _Pharmaceuticals/Health Products_.
 
 Type | Column | Type
 -----|--------|------
@@ -179,7 +181,7 @@ null | source | varchar,
 null | last_updated | date
 
 
-**candsummary**
+**candsummary**: Aggregated summary of contributions to a candidate during a cycle.
 
 Type | Column | Type
 -----|--------|------
@@ -199,7 +201,7 @@ null | source | varchar,
 null | last_updated | date
 
 
-**buyer_address**
+**buyer_address**: Dimension table for the buyers in the ARCOS dataset.
 
 Type | Column | Type
 -----|--------|------
@@ -215,7 +217,7 @@ null | BUYER_COUNTY | varchar,
 null | BUYER_ADDL_CO_INFO | varchar,
 
 
-**reporter_address**
+**reporter_address**: Dimension table for the reporters in the ARCOS dataset.
 
 Type | Column | Type
 -----|--------|------
@@ -230,7 +232,7 @@ null | REPORTER_ZIP | int,
 null | REPORTER_COUNTY | varchar,
 
 
-**county_raw**
+**county_raw**: Ohio county-level data for opioid buying and reporting.
 
 Type | Column | Type
 -----|--------|------
@@ -260,14 +262,14 @@ null | Reporter_family | varchar,
 null | dos_str | decimal,
 
 
-**drug_list**
+**drug_list**: A list of drug names in the dataset.
 
 Type | Column | Type
 -----|--------|------
 PK | DRUG_NAME | varchar
 
 
-**pharm_location**
+**pharm_location**: Latitude and longitude for pharmacy locations.
 
 Type | Column | Type
 -----|--------|------
@@ -277,7 +279,7 @@ null | lon | decimal,
 
 
 
-**ohio_county**
+**ohio_county**: List of ohio counties with 'fips' codes.
 
 Type | Column | Type
 -----|--------|------
@@ -286,7 +288,7 @@ null | BUYER_STATE | char(2),
 PK | countyfips | int
 
 
-**county_pop**
+**county_pop**: Population of counties in ohio.
 
 Type | Column | Type
 -----|--------|------
@@ -298,7 +300,7 @@ null | year | varchar,
 null | population | int
 
 
-**candidate**
+**candidate**: All candidates from the openSecrets Excel file.
 
 Type | Column | Type
 -----|--------|------
@@ -310,7 +312,7 @@ null | FECCandID | varchar,
 null | metadata_sheet | varchar
 
 
-**crp_industry_codes**
+**crp_industry_codes**: Dimension table for industry codes and what industry they represent.
 
 Type | Column | Type
 -----|--------|------
@@ -323,7 +325,7 @@ null | SectorLong | varchar,
 null | metadata_sheet | varchar
 
 
-**crp_member**
+**crp_member**: All members of the house or senate by cycle (year).
 
 Type | Column | Type
 -----|--------|------
@@ -335,7 +337,7 @@ null | FECCandID | varchar,
 null | metadata_sheet | varchar
 
 
-**committee**
+**committee**: Dimensional table for committees with a code as reference.
 
 Type | Column | Type
 -----|--------|------
@@ -344,7 +346,7 @@ null | CmteName | varchar,
 null | metadata_sheet | varchar
 
 
-**expenditure_codes**
+**expenditure_codes**: Dimensional table for types of expenditures.
 
 Type | Column | Type
 -----|--------|------
@@ -355,11 +357,7 @@ null | Sector | varchar,
 null | SectorName | varchar,
 null | metadata_sheet | varchar
 
-
-
-
-
-**unemployment_rate**
+**unemployment_rate**: Rate of unemployment for ohio counties from the Bureau of Labor Statistics.
 
 Type | Column | Type
 -----|--------|------
@@ -370,7 +368,7 @@ null | value | decimal,
 null | footnotes | varchar
 
 
-**cw_area**
+**cw_area**: Dimensional table that gives area code detail for the Bureau of Labor Statistics API.
 
 Type | Column | Type
 -----|--------|------
@@ -381,7 +379,7 @@ null | selectable | varchar,
 null | sort_sequence | int
 
 
-**cu_item**
+**cu_item**: Dimensional table that gives item detail for the Bureau of Labor Statistics API.
 
 Type | Column | Type
 -----|--------|------
@@ -391,7 +389,7 @@ null | display_level | varchar,
 null | selectable | varchar,
 null | sort_sequence | int
 
-**la_area**
+**la_area**: Dimensional table that gives area detail for the Bureau of Labor Statistics API.
 
 Type | Column | Type
 -----|--------|------
@@ -403,7 +401,7 @@ null | selectable | varchar,
 null | sort_sequence | int
 
 
-**la_area_type**
+**la_area_type**: Dimensional table that gives area type detail for the Bureau of Labor Statistics API.
 
 Type | Column | Type
 -----|--------|------
@@ -411,7 +409,7 @@ PK | area_type_code | char(1),
 null | areatype_text | varchar
 
 
-**la_measure**
+**la_measure**: Dimensional table that gives measure for the Bureau of Labor Statistics API.
 
 Type | Column | Type
 -----|--------|------
