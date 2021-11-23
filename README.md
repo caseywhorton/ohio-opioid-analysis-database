@@ -6,7 +6,7 @@ Photo by <a href="https://unsplash.com/@towfiqu999999?utm_source=unsplash&utm_me
 ---
 WHAT IS THIS REPO AND PROJECT ALL ABOUT?
 
-# Installation
+# Installation & Setup
 
 This project used python version 3.8.5, which can be installed through the `pip` package manager or Anaconda. To learn more about getting started with python on your machine [visit this link](https://python.org). To learn more about Anaconda, please [visit this link](https://www.anaconda.com).
 
@@ -22,6 +22,47 @@ Required packages:
 Custom modules:
 + helper.py
 + sql_queries.py
+
+## Amazon S3
+
+All input data is stored in S3 (Simple Storage Service) in JSON format.
+
+**S3 files (us-west-2)**
++ county raw data: s3://.../county_raw.tsv.gz
++ Bureau of labor statistics dimension files:
+  + cu.item.txt
+  + cw.area.txt
+  + la.area_type.txt
+  + la.area.txt
+  + la.measure.txt
++ openSecrets file
+  + [Visit this link to download the file](https://www.opensecrets.org/open-data/api-documentation)
+
+
+
+
+
+## Redshift (Elastic Map Reduce on Amazon Web Services)
+
+For this project, I used a Redshift cluster to host a Postgres database. The database is where the fact and dimension tables are stored.
+
+_Note:_ The Redshift cluster endpoint is the host name of the postgres database. You can find this under _General information_ for the Redshift cluster.
+
+**Creating a Redshift Cluster**
+
+Creating a redshift cluster is easy. For this project I used the Free Tier machine that comes pre-loaded with some data. Go to this link for a tutorial on creating cluster in Redshift: https://docs.aws.amazon.com/redshift/latest/dg/tutorial-loading-data-launch-cluster.html.
+
+**Modify publicly accessible settings**
+
+If you want to make the Redshift cluster publicly available to access to a larger number of you can change this by going to the _Actions_ menu on the Redshift cluster page.
+
+**Manage IAM Roles**
+
+Add a role to the Redshift cluster that has access to read S3 buckets and full access to Redshift. This will require you to make a role that has the required permissions. Go to this link to see more about creating Roles in AWS: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create.html. Under _Actions_ in the Redshift cluster page (once you click on the cluster name, when available) you will see an option to _Manage IAM roles_ and there you will be able to add roles to the cluster.
+
+**VPC Security Group**
+
+Add a VPC security group to the list of security groups. You can edit the VPC security groups by going to the _Properties_ tab on the Redshift cluster page and going down the page and choosing to edit the _Network and security settings_.  Adding a security group to the list of security groups that can access the Redshift cluster can allow your computer access. Go to this link to see more about creating VPC security groups in AWS: https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html
 
 # Usage
 
@@ -39,6 +80,23 @@ Status updates and any error information will show up in the terminal. If the en
 + helper.py
 + sql_queries.py
 + config.yaml
++ county_raw.tsv.gz
++ bureau of labor statistics files (with links)
+  + [la.area.txt](https://download.bls.gov/pub/time.series/la/la.area)
+  + [la.area_type.txt](https://download.bls.gov/pub/time.series/la/la.area_type)
+  + [cu.item.txt](https://download.bls.gov/pub/time.series/cu/cu.item)
+  + [cw.area.txt](https://download.bls.gov/pub/time.series/cu/cu.area)
+  + [la.measure.txt](https://download.bls.gov/pub/time.series/la/la.measure)
+
+References:
+
+[Getting started with Bureau of labor statistics API](https://stats.bls.gov/developers/)  
+[Individual Series ID formats for Bureau of labor statistics API](https://stats.bls.gov/help/hlpforma.htm#LA)  
+[arcospy API documentation](https://pypi.org/project/arcospy/)  
+[Getting started with the acrospy API](https://github.com/jeffcsauer/arcospy/blob/master/docs/Getting%20up%20and%20running%20-%20examining%20pharmacy%20patterns.ipynb)  
+[openSecrets API documentation](https://www.opensecrets.org/open-data/api-documentation)
+[crediting openSecrets](https://www.opensecrets.org/open-data/credit-opensecrets)  
+
 
 # Data sources
 
