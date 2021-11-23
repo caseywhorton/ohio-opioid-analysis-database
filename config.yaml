@@ -1,0 +1,14 @@
+# config file
+
+aws_access_key_id: ''
+aws_secret_access_key: ''
+bucket: ''
+iam_role: ''
+host: ''
+dbname: ''
+user: ''
+password: ''
+port: 5439
+opensecrets_api_key: ''
+arcos_api_key: "WaPo"
+county_raw_s3: ""
