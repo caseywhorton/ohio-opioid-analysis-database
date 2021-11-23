@@ -3,14 +3,33 @@
 Photo by <a href="https://unsplash.com/@towfiqu999999?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Towfiqu barbhuiya</a> on <a href="https://unsplash.com/s/photos/pills?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 
 # ohio-opioid-analysis-database
-
+---
 WHAT IS THIS REPO AND PROJECT ALL ABOUT?
 
 # Installation
 
+This project used python version 3.8.5, which can be installed through the `pip` package manager or Anaconda. To learn more about getting started with python on your machine [visit this link](https://python.org). To learn more about Anaconda, please [visit this link](https://www.anaconda.com).
+
+Required packages:
+
+`pandas == 1.2.4`  
+`boto3 == 1.20.3`  
+`psycopg2 == 2.9.2`  
+`argparse == 1.1`  
+`yaml == 5.4.1`  
+`tqdm == 5.49.0`
+
+Custom modules:
++ helper.py
++ sql_queries.py
+
 # Usage
 
+The files in the repo should all be saved to the same directory. After navigating to the directory from the command line, run this command to start the ETL process:
+
 `~ python etl.py config.yaml`
+
+Status updates and any error information will show up in the terminal. If the entire program runs without issue, you should see something like image below:
 
 <img src="images/completed_program.PNG" width="800" height="300">
 
@@ -27,13 +46,19 @@ WHAT IS THIS REPO AND PROJECT ALL ABOUT?
 
 Upload the excel file for the dimension and fact tables
 
-## OpenSecrets API
+## OpenSecrets
+
+**Tables**
+
+**API**
 
 + candindbyind
 + candsummary
 + candcontrib
 
 ## US Bureau of Labor Statiscs
+
+**API**
 
 https://stats.bls.gov/help/hlpforma.htm#EN
 State and County Employment and Wages from Quarterly Census of Employment and Wages
@@ -43,6 +68,10 @@ State and County Employment and Wages from Quarterly Census of Employment and Wa
 **arcospy**
 
 ## ETL Process
+
+Run `etl.py` in the command line:
+
+Connect to Redshift >> Drop tables >> Create tables >> Copy from S3 to Redshift >> Call APIs & Return Data >> Insert data to Redshift
 
 ## Database Design Schema
 
