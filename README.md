@@ -39,10 +39,6 @@ All input data is stored in S3 (Simple Storage Service) in JSON format.
 + openSecrets file
   + [Visit this link to download the file](https://www.opensecrets.org/open-data/api-documentation)
 
-
-
-
-
 ## Redshift (Elastic Map Reduce on Amazon Web Services)
 
 For this project, I used a Redshift cluster to host a Postgres database. The database is where the fact and dimension tables are stored.
@@ -84,16 +80,6 @@ Status updates and any error information will show up in the terminal. If the en
 + get_ohio_county_raw_data.py
 + images/
 
-References:
-
-[Getting started with Bureau of labor statistics API](https://stats.bls.gov/developers/)  
-[Individual Series ID formats for Bureau of labor statistics API](https://stats.bls.gov/help/hlpforma.htm#LA)  
-[arcospy API documentation](https://pypi.org/project/arcospy/)  
-[Getting started with the acrospy API](https://github.com/jeffcsauer/arcospy/blob/master/docs/Getting%20up%20and%20running%20-%20examining%20pharmacy%20patterns.ipynb)  
-[openSecrets API documentation](https://www.opensecrets.org/open-data/api-documentation)  
-[crediting openSecrets](https://www.opensecrets.org/open-data/credit-opensecrets)  
-
-
 # Data sources
 
 ## OpenSecrets Excel File
@@ -106,7 +92,11 @@ Upload the excel file for the dimension and fact tables
 
 **Tables**
 
-**API**
+In the [API documentatin page](https://www.opensecrets.org/open-data/api-documentation) you will find a link to download a file called "CRP_IDs.xls". This is an Excel spreadsheet containing pages for candidate IDs, industry codes, expenditure codes and Congressional Cmtes.  
+Reference: https://www.opensecrets.org/open-data/api-documentation
+
+**API**  
+
 [Getting started with the acrospy API](https://github.com/jeffcsauer/arcospy/blob/master/docs/Getting%20up%20and%20running%20-%20examining%20pharmacy%20patterns.ipynb)  
 [openSecrets API documentation](https://www.opensecrets.org/open-data/api-documentation)  
 
@@ -122,12 +112,14 @@ _This project uses 3 API calls:_
 
 **API**
 
-https://stats.bls.gov/help/hlpforma.htm#EN
-State and County Employment and Wages from Quarterly Census of Employment and Wages
+[State and County Employment and Wages from Quarterly Census of Employment and Wages](https://stats.bls.gov/help/hlpforma.htm#EN)
 
 ## DEA Arcos Dataset
 
 **arcospy**
+
+[arcospy API documentation](https://pypi.org/project/arcospy/)  
+[Getting started with the acrospy API](https://github.com/jeffcsauer/arcospy/blob/master/docs/Getting%20up%20and%20running%20-%20examining%20pharmacy%20patterns.ipynb) 
 
 ## ETL Process
 
@@ -135,7 +127,16 @@ Run `etl.py` in the command line:
 
 Connect to Redshift >> Drop tables >> Create tables >> Copy from S3 to Redshift >> Call APIs & Return Data >> Insert data to Redshift
 
-## Database Design Schema
+# References:
+
+[Getting started with Bureau of labor statistics API](https://stats.bls.gov/developers/)  
+[Individual Series ID formats for Bureau of labor statistics API](https://stats.bls.gov/help/hlpforma.htm#LA)  
+[arcospy API documentation](https://pypi.org/project/arcospy/)  
+[Getting started with the acrospy API](https://github.com/jeffcsauer/arcospy/blob/master/docs/Getting%20up%20and%20running%20-%20examining%20pharmacy%20patterns.ipynb)  
+[openSecrets API documentation](https://www.opensecrets.org/open-data/api-documentation)  
+[crediting openSecrets](https://www.opensecrets.org/open-data/credit-opensecrets)  
+
+# Database Design Schema
 
 **candcontrib**
 
