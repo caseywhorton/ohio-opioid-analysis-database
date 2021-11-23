@@ -86,6 +86,7 @@ def main():
     for result in tqdm(ohio_candidates, desc = 'candIndByInd'):
         cid, year = result
         df = helper.opensecrets_candindbyind(cid,year,'H04', params['opensecrets_api_key'])
+        df.drop('cand_name',axis=1,inplace=True)
         df_list.append(df)
        
     df = pd.concat(df_list)
@@ -103,6 +104,7 @@ def main():
             df = df.replace('',0)
         except:
             pass
+        df.drop('cand_name',axis=1,inplace=True)
         df_list.append(df)
        
     df = pd.concat(df_list)
@@ -118,6 +120,7 @@ def main():
     for result in tqdm(ohio_candidates, desc = 'candcontrib'):
         cid, year = result
         df = helper.opensecrets_candcontrib(cid, year, params['opensecrets_api_key'])
+        df.drop('cand_name',axis=1,inplace=True)
         df_list.append(df)
        
     df = pd.concat(df_list)
