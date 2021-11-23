@@ -46,11 +46,10 @@ State and County Employment and Wages from Quarterly Census of Employment and Wa
 
 ## Database Design Schema
 
-candcontrib
+**candcontrib**
 
 Type | Column | Type
 -----|--------|------
-null | cand_name | varchar,
 null | cid | varchar,
 null | cycle | int,
 null | origin | varchar,
@@ -62,10 +61,50 @@ null | pacs | int,
 null | indivs | int
 
 
-buyer_address
+**candIndbyInd**
+
 Type | Column | Type
 -----|--------|------
-null | BUYER_DEA_NO | varchar,
+null | cid | varchar,
+null | cycle | int,
+null | industry | varchar,
+null | chamber | varchar,
+null | party | varchar,
+null | state | varchar,
+null | total | int,
+null | indivs | int,
+null | pacs | int,
+null | rank | int,
+null | origin | varchar,
+null | source | varchar, 
+null | last_updated | date
+
+
+**candsummary**
+
+Type | Column | Type
+-----|--------|------
+null | cid | varchar,
+null | cycle | varchar,
+null | state | varchar,
+null | party | varchar,
+null | chamber | varchar,
+null | first_elected | int,
+null | next_election | int,
+null | total | decimal,
+null | spent | decimal,
+null | cash_on_hand | decimal,
+null | debt | decimal,
+null | origin | varchar,
+null | source | varchar,
+null | last_updated | date
+
+
+**buyer_address**
+
+Type | Column | Type
+-----|--------|------
+PK | BUYER_DEA_NO | varchar,
 null | BUYER_BUS_ACT | varchar,
 null | BUYER_NAME | varchar,
 null | BUYER_ADDRESS1 | varchar,
@@ -77,11 +116,12 @@ null | BUYER_COUNTY | varchar,
 null | BUYER_ADDL_CO_INFO | varchar,
 
 
-reporter_address
+**reporter_address**
+
 Type | Column | Type
 -----|--------|------
 null | Reporter_family | varchar,
-null | REPORTER_DEA_NO | varchar,
+PK | REPORTER_DEA_NO | varchar,
 null | REPORTER_BUS_ACT | varchar,
 null | REPORTER_NAME | varchar,
 null | REPORTER_ADDRESS1 | varchar,
@@ -91,7 +131,8 @@ null | REPORTER_ZIP | int,
 null | REPORTER_COUNTY | varchar,
 
 
- county_raw
+**county_raw**
+
 Type | Column | Type
 -----|--------|------
 FK | REPORTER_DEA_NO | varchar,
@@ -119,13 +160,16 @@ null | Revised_Company_Name | varchar,
 null | Reporter_family | varchar,
 null | dos_str | decimal,
 
-drug_list
+
+**drug_list**
+
 Type | Column | Type
 -----|--------|------
-null | DRUG_NAME | varchar
+PK | DRUG_NAME | varchar
 
 
-pharm_location
+**pharm_location**
+
 Type | Column | Type
 -----|--------|------
 PK | BUYER_DEA_NO | varchar
@@ -134,18 +178,20 @@ null | lon | decimal,
 
 
 
-ohio_county
+**ohio_county**
+
 Type | Column | Type
 -----|--------|------
 null | BUYER_COUNTY | varchar,
 null | BUYER_STATE | char(2),
-null | countyfips | int
+PK | countyfips | int
 
 
-county_pop
+**county_pop**
+
 Type | Column | Type
 -----|--------|------
-null | countyfips | int,
+FK | countyfips | int,
 null | STATE | int,
 null | COUNTY | int,
 null | variable | varchar,
@@ -153,7 +199,8 @@ null | year | varchar,
 null | population | int
 
 
-candidate
+**candidate**
+
 Type | Column | Type
 -----|--------|------
 null | CID | varchar,
@@ -164,7 +211,8 @@ null | FECCandID | varchar,
 null | metadata_sheet | varchar
 
 
-crp_industry_codes
+**crp_industry_codes**
+
 Type | Column | Type
 -----|--------|------
 null | Catcode | varchar,
@@ -176,7 +224,8 @@ null | SectorLong | varchar,
 null | metadata_sheet | varchar
 
 
-crp_member
+**crp_member**
+
 Type | Column | Type
 -----|--------|------
 null | CID | varchar,
@@ -187,7 +236,8 @@ null | FECCandID | varchar,
 null | metadata_sheet | varchar
 
 
-committee
+**committee**
+
 Type | Column | Type
 -----|--------|------
 null | CODE | varchar,
@@ -195,7 +245,8 @@ null | CmteName | varchar,
 null | metadata_sheet | varchar
 
 
-expenditure_codes
+**expenditure_codes**
+
 Type | Column | Type
 -----|--------|------
 null | ExpCode | varchar,
@@ -206,47 +257,11 @@ null | SectorName | varchar,
 null | metadata_sheet | varchar
 
 
-candIndbyInd
-Type | Column | Type
------|--------|------
-null | cand_name | varchar,
-null | cid | varchar,
-null | cycle | int,
-null | industry | varchar,
-null | chamber | varchar,
-null | party | varchar,
-null | state | varchar,
-null | total | int,
-null | indivs | int,
-null | pacs | int,
-null | rank | int,
-null | origin | varchar,
-null | source | varchar, 
-null | last_updated | date
-
-
-candsummary
-Type | Column | Type
------|--------|------
-null | cand_name | varchar,
-null | cid | varchar,
-null | cycle | varchar,
-null | state | varchar,
-null | party | varchar,
-null | chamber | varchar,
-null | first_elected | int,
-null | next_election | int,
-null | total | decimal,
-null | spent | decimal,
-null | cash_on_hand | decimal,
-null | debt | decimal,
-null | origin | varchar,
-null | source | varchar,
-null | last_updated | date
 
 
 
-unemployment_rate
+**unemployment_rate**
+
 Type | Column | Type
 -----|--------|------
 null | series_id | varchar,
@@ -256,45 +271,50 @@ null | value | decimal,
 null | footnotes | varchar
 
 
-cw_area
+**cw_area**
+
 Type | Column | Type
 -----|--------|------
-null | area_code | varchar,
+PK | area_code | varchar,
 null | area_name | varchar,
 null | display_level | varchar,
 null | selectable | varchar,
 null | sort_sequence | int
 
 
-cu_item
+**cu_item**
+
 Type | Column | Type
 -----|--------|------
-null | item_code | varchar,
+PK | item_code | varchar,
 null | item_name | varchar,
 null | display_level | varchar,
 null | selectable | varchar,
 null | sort_sequence | int
 
-la_area
+**la_area**
+
 Type | Column | Type
 -----|--------|------
-null | area_type_code | char(1),
-null | area_code | varchar,
+FK | area_type_code | char(1),
+PK | area_code | varchar,
 null | area_text | varchar,
 null | display_level | varchar,
 null | selectable | varchar,
 null | sort_sequence | int
 
 
-la_area_type
+**la_area_type**
+
 Type | Column | Type
 -----|--------|------
-null | area_type_code | char(1),
+PK | area_type_code | char(1),
 null | areatype_text | varchar
 
 
-la_measure
+**la_measure**
+
 Type | Column | Type
 -----|--------|------
-null | measure_code | char(2),
+PK | measure_code | char(2),
 null | measure_text | varchar
