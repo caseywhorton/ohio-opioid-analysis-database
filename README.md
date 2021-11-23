@@ -12,6 +12,8 @@ WHAT IS THIS REPO AND PROJECT ALL ABOUT?
 
 `~ python etl.py config.yaml`
 
+<img src="images/completed_program.PNG" width="800" height="300">
+
 # Files
 
 + etl.py
