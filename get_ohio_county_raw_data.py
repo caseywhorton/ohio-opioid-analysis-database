@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import helper
 
 county_df = helper.county_list(key='WaPo')
 ohio_county_df = county_df[county_df.BUYER_STATE == 'OH']
