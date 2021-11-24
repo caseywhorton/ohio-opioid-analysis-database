@@ -1,14 +1,14 @@
 # config file
 
-aws_access_key_id: ''
-aws_secret_access_key: ''
-bucket: ''
-iam_role: ''
-host: ''
-dbname: ''
-user: ''
-password: ''
+aws_access_key_id: '<ENTER YOUR AWS ACCESS KEY>'
+aws_secret_access_key: '<ENTER YOUR AWS SECRET ACCESS KEY>'
+bucket: '<ENTER THE S3 BUCKET NAME FOR THE OPENSECRETS DATA>'
+iam_role: '<REDSHIFT ROLE ARN>'
+host: '<ENDPOINT FOR THE REDSHIFT CLUSTER>'
+dbname: '<NAME OF THE REDSHIFT CLUSTER>'
+user: '<USERNAME FOR THE REDSHIFT CLUSTER>'
+password: '<PASSWORD FOR THE REDSHIFT CLUSTER>'
 port: 5439
-opensecrets_api_key: ''
+opensecrets_api_key: '<API KEY FOR OPENSECRETS>'
 arcos_api_key: "WaPo"
-county_raw_s3: ""
+county_raw_s3: "S3 BUCKET FILEPATH FOR RAW COUNTY-LEVEL DATA"
