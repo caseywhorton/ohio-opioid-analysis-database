@@ -81,7 +81,9 @@ def opensecrets_candcontrib(cid, cycle,api_key):
    
 
 def county_list(key=''):
-    """Get dataframe of counties, states, and fips codes that are represented in the ARCOS data
+    """
+    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
+    Get dataframe of counties, states, and fips codes that are represented in the ARCOS data
     Args:
         key: Key needed to make query successful (NOTE: only necessary arg)
     Returns:
@@ -101,7 +103,9 @@ def county_list(key=''):
 
 
 def county_raw(county='', state='', key=''):
-    """Data from from non-contiguous states not yet processed and available.
+    """
+    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
+    Data from from non-contiguous states not yet processed and available.
     Args:
         county: Filter the data to only this county (e.g. 'Mingo')
         state: Filter the data to county within this state (e.g. 'WV')
@@ -127,7 +131,9 @@ def county_raw(county='', state='', key=''):
 
 
 def county_population(county='', state='', key=''):
-    """Get annual population for counties between 2006 and 2014
+    """
+    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
+    Get annual population for counties between 2006 and 2014
     Args:
         county: Filter the data to only this county (e.g. 'Mingo')
         state: Filter the data to county within this state (e.g. 'WV')
@@ -153,7 +159,9 @@ def county_population(county='', state='', key=''):
 
 
 def buyer_addresses(county='', state='', key=''):
-    """Get DEA designated addresses for each pharmacy
+    """
+    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
+    Get DEA designated addresses for each pharmacy
     based on BUYER_DEA_NO (Only includes retail and chain pharmacy designations)
     Args:
         county: Filter the data to only this county (e.g. 'Mingo')
@@ -180,7 +188,9 @@ def buyer_addresses(county='', state='', key=''):
 
 
 def drug_list(key=''):
-    """Get list of drugs available in the ARCOS database
+    """
+    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
+    Get list of drugs available in the ARCOS database
     Args:
         key: Key needed to make query successful
     Returns:
@@ -201,7 +211,9 @@ def drug_list(key=''):
 
 
 def pharm_counties(county='', state='', key=''):
-    """Get county GEOID for each pharmacy based on
+    """
+    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
+    Get county GEOID for each pharmacy based on
     BUYER_DEA_NO (Only includes retail and chain pharmacy designations)
     Args:
         county: Filter the data to only this county (e.g. 'Mingo')
@@ -228,7 +240,9 @@ def pharm_counties(county='', state='', key=''):
 
 
 def pharm_latlon(county='', state='', key=''):
-    """Get latitude and longitude data for each pharmacy based on
+    """
+    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
+    Get latitude and longitude data for each pharmacy based on
     BUYER_DEA_NO (Only includes retail and chain pharmacy designations)
     Args:
         county: Filter the data to only this county (e.g. 'Mingo')
@@ -255,7 +269,9 @@ def pharm_latlon(county='', state='', key=''):
 
 
 def reporter_addresses(county='', state='', key=''):
-    """Get DEA designated addresses for each Reporter based
+    """
+    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
+    Get DEA designated addresses for each Reporter based
     on REPORTER_DEA_NO (Includes Manufacturers and Distributors)
     Args:
         county: Filter the data to only this county (e.g. 'Mingo')
