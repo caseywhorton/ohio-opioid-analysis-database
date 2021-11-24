@@ -11,6 +11,21 @@ Reference: https://www.hhs.gov/opioids/about-the-epidemic/index.html
 
 _This project also served as my capstone project for the [Data Engineer Nanodegree Program by Udacity](https://www.udacity.com/course/data-engineer-nanodegree--nd027?utm_source=gsem_brand&utm_medium=ads_r&utm_campaign=12712960793_c&utm_term=124530938590&utm_keyword=data%20engineer%20nanodegree_e&gclid=CjwKCAiAv_KMBhAzEiwAs-rX1PQVZVeGVHV9K34bBP2kNb1yqeq2WbRh4vt4oG1AKDVWN1VPJPEKDhoCZSkQAvD_BwE)_.
 
+### More about the choice of tools, technologies, and data model
+
+For this project, all of the data sources cover a period of time from 2006 to 2014, and they cover the geographical area of the state of Ohio in the United States. The gathering and moving of data is a one-time batch occurence, so the data pipeline does not need to be on a schedule. With the exception of one file, most of the tables are relatively small (less than 1 million records) so inserting to a postgres database is manageable using insert statements. The raw count-level data for just the state of Ohio is above 7 million records, so it needs copied from a storage location into a database table using a copy statement. The use-case for this data is analysis, so an easy-to-understand and denormalized set of tables in a relational data model is sufficient, and Amazon Redshift is a great product for hosting a RDBMS for analysis. Connecting to AWS services is accomplished using the Python programming language, so a module ran in a command line interface that has internet access can accomplish the task of extracting this data, transforming it and loading it to its final destination on Amazon Redshift.
+
+The tools and technology choices made here would change under various scenarios:
++ Scenario 1: The data was increased by 100x.
+  + Insert table statements executed using the Pandas package would be insufficient to run in this scenario because it would take way too much time for the script to run.
+  + Saving the files in a compressed format on S3 and moving to staging table on Redshift would be accomplished using COPY statements
+  + The raw data would be saved in Parquet format and inserted into a table using distributed computing, meaning rewriting some of the ETL module using Spark and running it on a spark cluster.
++ Scenario 2: The pipelines would be run on a daily basis by 7 am every day.
+  + If for some reason there was a scheduling component to this project, then the script would need rewritten to be a DAG with supporting operators.
+  + The scheduling and running of the data pipeline could be executed on Apache Airflow  
++ Scenario 3: The database needed to be accessed by 100+ people.
+  +   
+
 # Installation & Setup
 
 This project used python version 3.8.5, which can be installed through the `pip` package manager or Anaconda using `conda`. To learn more about getting started with python on your machine [visit this link](https://python.org). To learn more about Anaconda, please [visit this link](https://www.anaconda.com).
