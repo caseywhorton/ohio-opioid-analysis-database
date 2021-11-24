@@ -81,12 +81,12 @@ Status updates and any error information will show up in the terminal. If the en
 
 # Files
 
-+ etl.py
-+ helper.py
-+ sql_queries.py
-+ config.yaml
-+ get_ohio_county_raw_data.py
-+ images/
++ etl.py: python module that executes the ETL process from S3 and API calls to Redshift
++ helper.py: python module with user defined functions
++ sql_queries.py: python module with sql queries and copy statements
++ config.yaml: configuration file with parameters
++ get_ohio_county_raw_data.py: python module to get the county-level raw data from ohio
++ images/: directory of images used in the repo
 
 # Data sources
 
@@ -98,6 +98,8 @@ In the [API documentatin page](https://www.opensecrets.org/open-data/api-documen
 Reference: https://www.opensecrets.org/open-data/api-documentation
 
 **API**  
+
+In order to use the openSecrets [you will need to register on the site](https://www.opensecrets.org/api/admin/index.php?function=signup). After registering, you'll get an API key for the openSecrets API, which you will use in the config.yaml file.
 
 _This project uses 3 API calls:_  
 + candindbyind: Provides total contributed to specified candidate from specified industry
