@@ -24,7 +24,9 @@ The tools and technology choices made here would change under various scenarios:
   + If for some reason there was a scheduling component to this project, then the script would need rewritten to be a DAG with supporting operators.
   + The scheduling and running of the data pipeline could be executed on Apache Airflow  
 + Scenario 3: The database needed to be accessed by 100+ people.
-  +   
+  + For this project there is only one database, the _dev_ database, but for multiple users a few changes would be made:
+   + A separate database called _prod_ would be created for users
+   + A schema for users would be created where tables and views are already created so they can run the queries and see the data without impacting the performance of the database for executing queries in another schema where tables would be staged or loaded into the database
 
 # Installation & Setup
 
