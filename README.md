@@ -200,7 +200,8 @@ transaction_date|countyfips|buyer_county|buyer_bus_act|reporter_bus_act|populati
 
 # Data Dictionary and Database Design
 
-The full data dictionary can be found in the repo [in this location](ohio-opioid-analysis-database/Database/Ohio Opioid Database Data Dictionary.csv).
+The full, downloadable version of the data dictionary can be found in the repo [in this location](https://github.com/caseywhorton/ohio-opioid-analysis-database/blob/main/Database/Ohio%20Opioid%20Database%20Data%20Dictionary.csv).  
+Below are descriptions of the individual tables.
 
 **candcontrib**: Top contributors to a candidate during a cycle.
 
