@@ -149,13 +149,15 @@ More Links:
 [arcospy API documentation](https://pypi.org/project/arcospy/)  
 [Getting started with the acrospy API](https://github.com/jeffcsauer/arcospy/blob/master/docs/Getting%20up%20and%20running%20-%20examining%20pharmacy%20patterns.ipynb) 
 
+# ETL
+
 ## ETL Process
 
 Run `etl.py` in the command line:
 
 Connect to Redshift >> Drop tables >> Create tables >> Copy from S3 to Redshift >> Call APIs & Return Data >> Insert data to Redshift
  
-### ETL Validation
+## ETL Validation
 
 The below query returns that raw data at the county level joined with buyer and reporter level information copied from tables on S3 as well as population data from the ARCOS API. Joins to other tables can be accomplished using a combination of county FIPs and year/month. The DEA number(s) can be used as keys to give exact pharmacy locations in the "pharm_location" table as well.
 
