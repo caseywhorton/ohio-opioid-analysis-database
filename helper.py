@@ -81,9 +81,7 @@ def opensecrets_candcontrib(cid, cycle,api_key):
    
 
 def county_list(key=''):
-    """
-    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
-    Get dataframe of counties, states, and fips codes that are represented in the ARCOS data
+    """Get dataframe of counties, states, and fips codes that are represented in the ARCOS data
     Args:
         key: Key needed to make query successful (NOTE: only necessary arg)
     Returns:
@@ -103,9 +101,7 @@ def county_list(key=''):
 
 
 def county_raw(county='', state='', key=''):
-    """
-    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
-    Data from from non-contiguous states not yet processed and available.
+    """Data from from non-contiguous states not yet processed and available.
     Args:
         county: Filter the data to only this county (e.g. 'Mingo')
         state: Filter the data to county within this state (e.g. 'WV')
@@ -131,9 +127,7 @@ def county_raw(county='', state='', key=''):
 
 
 def county_population(county='', state='', key=''):
-    """
-    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
-    Get annual population for counties between 2006 and 2014
+    """Get annual population for counties between 2006 and 2014
     Args:
         county: Filter the data to only this county (e.g. 'Mingo')
         state: Filter the data to county within this state (e.g. 'WV')
@@ -159,9 +153,7 @@ def county_population(county='', state='', key=''):
 
 
 def buyer_addresses(county='', state='', key=''):
-    """
-    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
-    Get DEA designated addresses for each pharmacy
+    """Get DEA designated addresses for each pharmacy
     based on BUYER_DEA_NO (Only includes retail and chain pharmacy designations)
     Args:
         county: Filter the data to only this county (e.g. 'Mingo')
@@ -188,9 +180,7 @@ def buyer_addresses(county='', state='', key=''):
 
 
 def drug_list(key=''):
-    """
-    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
-    Get list of drugs available in the ARCOS database
+    """Get list of drugs available in the ARCOS database
     Args:
         key: Key needed to make query successful
     Returns:
@@ -211,9 +201,7 @@ def drug_list(key=''):
 
 
 def pharm_counties(county='', state='', key=''):
-    """
-    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
-    Get county GEOID for each pharmacy based on
+    """Get county GEOID for each pharmacy based on
     BUYER_DEA_NO (Only includes retail and chain pharmacy designations)
     Args:
         county: Filter the data to only this county (e.g. 'Mingo')
@@ -240,9 +228,7 @@ def pharm_counties(county='', state='', key=''):
 
 
 def pharm_latlon(county='', state='', key=''):
-    """
-    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
-    Get latitude and longitude data for each pharmacy based on
+    """Get latitude and longitude data for each pharmacy based on
     BUYER_DEA_NO (Only includes retail and chain pharmacy designations)
     Args:
         county: Filter the data to only this county (e.g. 'Mingo')
@@ -269,9 +255,7 @@ def pharm_latlon(county='', state='', key=''):
 
 
 def reporter_addresses(county='', state='', key=''):
-    """
-    Reference: https://github.com/jeffcsauer/arcospy/blob/master/arcospy/arcospy.py
-    Get DEA designated addresses for each Reporter based
+    """Get DEA designated addresses for each Reporter based
     on REPORTER_DEA_NO (Includes Manufacturers and Distributors)
     Args:
         county: Filter the data to only this county (e.g. 'Mingo')
@@ -334,3 +318,17 @@ def get_bls_data(seriesid, startyear, endyear):
             if 'M01' <= period <= 'M12':
                 pd_list.append((seriesId,year,period,value,footnotes[0:-1]))
     return(pd.DataFrame(pd_list, columns = col_list))
+
+
+def check_greater_than_zero(table_name, cur, conn):
+    cur.execute("SELECT COUNT(*) FROM {}".format(table_name), conn)
+    obs_num_rows = cur.fetchone()[0]
+    assert obs_num_rows > 0, "0 rows."
+    print("{}: Check passed, rows returned: ".format(table_name) + str(obs_num_rows))
+    
+    
+def check_expected_rows(table_name, cur, conn, exp_num_rows):
+    cur.execute("SELECT COUNT(*) FROM {}".format(table_name), conn)
+    obs_num_rows = cur.fetchone()[0]
+    assert obs_num_rows == exp_num_rows, "Mismatched row count. Expected {}, observed {}.".format(exp_num_rows, obs_num_rows)
+    print('Checks passed, row counts match.')
