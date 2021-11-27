@@ -157,6 +157,8 @@ Run `etl.py` in the command line:
 
 Connect to Redshift >> Drop tables >> Create tables >> Copy from S3 to Redshift >> Call APIs & Return Data >> Insert data to Redshift
 
+<img src="images/ohio opioid etl process overview.PNG" width="700" height="350">
+
 ## ETL Data Quality Checks
 
 The code has two data quality checks that data must pass. Tables in the database that are the result of `Copy` statements must be non-empty, and we accomplish this using the `check_greater_than_zero` function in the _helper_ module. Tables in the database that are the result of API calls are checked using the `check_expected_rows` to validate that the expected number of rows are written to the table. You can see the results of the checks during the ETL process by viewing the output in the terminal.
