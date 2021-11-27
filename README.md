@@ -94,7 +94,7 @@ The files in the repo should all be saved to the same directory. After navigatin
 
 Status updates and any error information will show up in the terminal. If the entire program runs without issue, you should see something like the image below:
 
-<img src="images/completed_program.PNG" width="800" height="300">
+<img src="images/database_etl_completion.PNG" width="800" height="350">
 
 # Files
 
