@@ -164,7 +164,43 @@ Connect to Redshift >> Drop tables >> Create tables >> Copy from S3 to Redshift 
 [openSecrets API documentation](https://www.opensecrets.org/open-data/api-documentation)  
 [crediting openSecrets](https://www.opensecrets.org/open-data/credit-opensecrets)  
 
-# Database Design Schema
+# Validation
+
+The below query returns that raw data at the county level joined with buyer and reporter level information copied from tables on S3 as well as population data from the ARCOS API. Joins to other tables can be accomplished using a combination of county FIPs and year/month. The DEA number(s) can be used as keys to give exact pharmacy locations in the "pharm_location" table as well.
+
+```
+select 
+    county_raw.transaction_date,
+    ohio_county.countyfips,
+    buyer.buyer_county,
+    buyer.buyer_bus_act,
+    reporter.reporter_bus_act,
+    county_pop.population
+from county_raw
+join buyer_address as buyer
+on county_raw.buyer_dea_no = buyer.buyer_dea_no
+join reporter_address as reporter
+on county_raw.reporter_dea_no = reporter.reporter_dea_no
+join ohio_county
+on lower(buyer.buyer_county) = lower(ohio_county.buyer_county)
+join county_pop
+on ohio_county.countyfips = county_pop.countyfips and left(county_raw.transaction_date, 4) = county_pop.year
+limit 5;
+```
+
+Below is a table of results from the above query:
+
+transaction_date|countyfips|buyer_county|buyer_bus_act|reporter_bus_act|population
+----------------|----------|-------------|-------------|----------------|----------
+2012008|39001|ADAMS|CHAIN PHARMACY|DISTRIBUTOR|28524
+2012011|39001|ADAMS|RETAIL PHARMACY|DISTRIBUTOR|28524
+2012012|39001|ADAMS|CHAIN PHARMACY|DISTRIBUTOR|28524
+2012008|39001|ADAMS|RETAIL PHARMACY|DISTRIBUTOR|28524
+2012012|39001|ADAMS|CHAIN PHARMACY|DISTRIBUTOR|28524
+
+# Data Dictionary and Database Design
+
+The full data dictionary can be found in the repo [in this location](ohio-opioid-analysis-database/Database/Ohio Opioid Database Data Dictionary.csv).
 
 **candcontrib**: Top contributors to a candidate during a cycle.
 
