@@ -1,0 +1,140 @@
+Database,Schema,Table Name,Column Type,Column Name,Data Type,Description
+public,dev,candcontrib,null,cid,varchar,Candidate ID
+public,dev,candcontrib,null,cycle,int,"Year that the cycle started, 2 year cycles for house members, 6 years for senators."
+public,dev,candcontrib,null,origin,"varchar,",The site where the data came from.
+public,dev,candcontrib,null,source,"varchar,",Reference source for the data.
+public,dev,candcontrib,null,notice,"varchar,",Notice to person reading data.
+public,dev,candcontrib,null,org_name,"varchar,",Organization name.
+public,dev,candcontrib,null,total,"int,",Total contributed to candidate for the cycle.
+public,dev,candcontrib,null,pacs,"int,",Contribution amount from polital action committees.
+public,dev,candcontrib,null,indivs,int,Contribution from individual contributors.
+public,dev,candindbyind,null,cid,"varchar,",Candidate ID
+public,dev,candindbyind,null,cycle,"int,","Year that the cycle started, 2 year cycles for house members, 6 years for senators."
+public,dev,candindbyind,null,industry,"varchar,",Industry description of who made the contribution.
+public,dev,candindbyind,null,chamber,"varchar,",House or senate.
+public,dev,candindbyind,null,party,"varchar,",Political party of candidate.
+public,dev,candindbyind,null,state,"varchar,",State the candidate is a representative of.
+public,dev,candindbyind,null,total,"int,",Total contributed to candidate for the cycle by a single industry.
+public,dev,candindbyind,null,indivs,"int,",Contribution from individual industry to a candidate.
+public,dev,candindbyind,null,pacs,"int,",Contributions from political action committees from a certain industry.
+public,dev,candindbyind,null,rank,"int,",Need more information.
+public,dev,candindbyind,null,origin,"varchar,",The site where the data came from.
+public,dev,candindbyind,null,source,"varchar,",Reference source for the data.
+public,dev,candindbyind,null,last_updated,date,Date the data was last updated.
+public,dev,candsummary,null,cid,"varchar,",Candidate ID
+public,dev,candsummary,null,cycle,"varchar,","Year that the cycle started, 2 year cycles for house members, 6 years for senators."
+public,dev,candsummary,null,state,"varchar,",State the candidate is a representative of.
+public,dev,candsummary,null,party,"varchar,",Political party of candidate.
+public,dev,candsummary,null,chamber,"varchar,",House or senate.
+public,dev,candsummary,null,first_elected,"int,",Year or cycle first elected.
+public,dev,candsummary,null,next_election,"int,",Year or cycle of next election.
+public,dev,candsummary,null,total,"decimal,",Total contributed to candidate for the cycle.
+public,dev,candsummary,null,spent,"decimal,",Total spent by the candidate in a cycle? Need more information.
+public,dev,candsummary,null,cash_on_hand,"decimal,",Total cash on hand for candidate during cycle? Need more information.
+public,dev,candsummary,null,debt,"decimal,",Debt candidate holds? Need more information.
+public,dev,candsummary,null,origin,"varchar,",The site where the data came from.
+public,dev,candsummary,null,source,"varchar,",Reference source for the data.
+public,dev,candsummary,null,last_updated,date,Date the data was last updated.
+public,dev,buyer_address,PK,BUYER_DEA_NO,"varchar,",DEA number for buyer.
+public,dev,buyer_address,null,BUYER_BUS_ACT,"varchar,",Business account number for buyer.
+public,dev,buyer_address,null,BUYER_NAME,"varchar,",Buyer name.
+public,dev,buyer_address,null,BUYER_ADDRESS1,"varchar,",Street address for buyer.
+public,dev,buyer_address,null,BUYER_ADDRESS2,"varchar,","Street address for buyer, continued."
+public,dev,buyer_address,null,BUYER_CITY,"varchar,",City for buyer.
+public,dev,buyer_address,null,BUYER_STATE,"varchar,",State for buyer.
+public,dev,buyer_address,null,BUYER_ZIP,"int,",Zip code for buyer.
+public,dev,buyer_address,null,BUYER_COUNTY,"varchar,",County for buyer address.
+public,dev,buyer_address,null,BUYER_ADDL_CO_INFO,"varchar,",Additional info for buyer address.
+public,dev,reporter_address,null,Reporter_family,"varchar,",Reporter family name. Need more information.
+public,dev,reporter_address,PK,REPORTER_DEA_NO,"varchar,",DEA number for reporter.
+public,dev,reporter_address,null,REPORTER_BUS_ACT,"varchar,",Business account number for reporter.
+public,dev,reporter_address,null,REPORTER_NAME,"varchar,",Reporter name.
+public,dev,reporter_address,null,REPORTER_ADDRESS1,"varchar,",Street address for reporter.
+public,dev,reporter_address,null,REPORTER_CITY,"varchar,","Street address for reporter, continued."
+public,dev,reporter_address,null,REPORTER_STATE,"char(2),",State for reporter address.
+public,dev,reporter_address,null,REPORTER_ZIP,"int,",Zip code for reporter address.
+public,dev,reporter_address,null,REPORTER_COUNTY,"varchar,",County for reporter address.
+public,dev,county_raw,FK,REPORTER_DEA_NO,"varchar,","Reporter DEA number, references reporter_address table."
+public,dev,county_raw,FK,BUYER_DEA_NO,"varchar,","Buyer DEA number, references buyer_address table."
+public,dev,county_raw,null,TRANSACTION_CODE,"char(2),",Transaction code.
+public,dev,county_raw,null,DRUG_CODE,"decimal,",Drug code.
+public,dev,county_raw,null,NDC_NO,"varchar,","National drug code number, usually a 10 - 11 digit number to represent the drug labeler, product and dosage."
+public,dev,county_raw,null,DRUG_NAME,"varchar,",Name of drug.
+public,dev,county_raw,null,QUANTITY,"decimal,",Quantity dispensed.
+public,dev,county_raw,null,UNIT,"char(1),",Unit type of drug.
+public,dev,county_raw,null,ACTION_INDICATOR,"char(1),",Need more information.
+public,dev,county_raw,null,ORDER_FORM_NO,"varchar,",Order form number.
+public,dev,county_raw,null,CORRECTION_NO,"decimal,",Correction number.
+public,dev,county_raw,null,STRENGTH,"decimal,",Strength of medication
+public,dev,county_raw,null,TRANSACTION_DATE,"decimal,",Date of transaction.
+public,dev,county_raw,null,CALC_BASE_WT_IN_GM,"decimal,",Calculated base weight in grams.
+public,dev,county_raw,null,DOSAGE_UNIT,"decimal,",Unit of dosage.
+public,dev,county_raw,null,TRANSACTION_ID,"decimal,",Transaction ID.
+public,dev,county_raw,null,Product_Name,"varchar,",Name of product.
+public,dev,county_raw,null,Ingredient_Name,"varchar,",Ingredient name.
+public,dev,county_raw,null,Measure,"varchar,",Measure for drug.
+public,dev,county_raw,null,MME_Conversion_Factor,"decimal,","Conversion factor for the morphine milligram equivalents, an indication of the strenght of the drug."
+public,dev,county_raw,null,Combined_Labeler_Name,"varchar,",Labeler name.
+public,dev,county_raw,null,Revised_Company_Name,"varchar,",Company name.
+public,dev,county_raw,null,Reporter_family,"varchar,",Reporter family name. Need more information.
+public,dev,county_raw,null,dos_str,decimal,Dosage string.
+public,dev,drug_list,PK,DRUG_NAME,varchar,Name of drug.
+public,dev,pharm_location,PK,BUYER_DEA_NO,varchar,DEA number for buyer.
+public,dev,pharm_location,null,lat,"decimal,",Latitude for pharmacy.
+public,dev,pharm_location,null,lon,decimal,Longitude for pharmacy.
+public,dev,ohio_county,null,BUYER_COUNTY,"varchar,",County name for buyer.
+public,dev,ohio_county,null,BUYER_STATE,"char(2),",State abbreviation.
+public,dev,ohio_county,PK,countyfips,int,Federal information processing standard number that indicates the US county.
+public,dev,county_pop,FK,countyfips,"int,","Federal information processing standard number that indicates the US county, references countyfips from the ohio_county."
+public,dev,county_pop,null,STATE,"int,",US state name.
+public,dev,county_pop,null,COUNTY,"int,",County name.
+public,dev,county_pop,null,variable,"varchar,",Need more information.
+public,dev,county_pop,null,year,"varchar,",Year the population is counted for.
+public,dev,county_pop,null,population,int,Population of the county for the year counted.
+public,dev,crp_industry_codes,null,Catcode,"varchar,",Category code.
+public,dev,crp_industry_codes,null,Catname,"varchar,",Category name
+public,dev,crp_industry_codes,null,Carorder,"varchar,",Category order.
+public,dev,crp_industry_codes,null,Industry,"varchar,",Industry name.
+public,dev,crp_industry_codes,null,Sector,"varchar,",Sector abbreviation.
+public,dev,crp_industry_codes,null,SectorLong,"varchar,",Description of the industry sector.
+public,dev,crp_industry_codes,null,metadata_sheet,varchar,Name of spreadsheet the data came from.
+public,dev,crp_member,null,CID,"varchar,",Candidate ID
+public,dev,crp_member,null,CRPName,"varchar,",Candidate name.
+public,dev,crp_member,null,Party,"varchar,",Political party of candidate.
+public,dev,crp_member,null,Office,"varchar,",House or senate.
+public,dev,crp_member,null,FECCandID,"varchar,",Federal election committee ID.
+public,dev,crp_member,null,metadata_sheet,varchar,Name of spreadsheet the data came from.
+public,dev,committee,null,CODE,"varchar,",Committee code.
+public,dev,committee,null,CmteName,"varchar,",Committee name.
+public,dev,committee,null,metadata_sheet,varchar,Name of spreadsheet the data came from.
+public,dev,expenditure_codes,null,ExpCode,"varchar,",Expenditure code.
+public,dev,expenditure_codes,null,DescripShort,"varchar,",Short description of expenditure type.
+public,dev,expenditure_codes,null,DescripLong,"varchar,",Long description of expenditure type.
+public,dev,expenditure_codes,null,Sector,"varchar,",Sector of the expenditure type.
+public,dev,expenditure_codes,null,SectorName,"varchar,",Name of sector of the expenditure type.
+public,dev,expenditure_codes,null,metadata_sheet,varchar,Name of spreadsheet the data came from.
+public,dev,unemployment_rate,null,series_id,"varchar,",BLS API series ID code.
+public,dev,unemployment_rate,null,year,"int,",Year.
+public,dev,unemployment_rate,null,period,"char(3),",Month period.
+public,dev,unemployment_rate,null,value,"decimal,","Unemployment rate for series id, year and county."
+public,dev,unemployment_rate,null,footnotes,varchar,Footnotes for reach observation.
+public,dev,cw_area,PK,area_code,"varchar,",Area code.
+public,dev,cw_area,null,area_name,"varchar,",Area name.
+public,dev,cw_area,null,display_level,"varchar,",Display level.
+public,dev,cw_area,null,selectable,"varchar,",Need more information.
+public,dev,cw_area,null,sort_sequence,int,Need more information.
+public,dev,cw_item,PK,item_code,"varchar,",Item code.
+public,dev,cw_item,null,item_name,"varchar,",Item name.
+public,dev,cw_item,null,display_level,"varchar,",Display level.
+public,dev,cw_item,null,selectable,"varchar,",Need more information.
+public,dev,cw_item,null,sort_sequence,int,Need more information.
+public,dev,la_area,FK,area_type_code,"char(1),",Area type code.
+public,dev,la_area,PK,area_code,"varchar,",Area code.
+public,dev,la_area,null,area_text,"varchar,",Area text.
+public,dev,la_area,null,display_level,"varchar,",Display level.
+public,dev,la_area,null,selectable,"varchar,",Need more information.
+public,dev,la_area,null,sort_sequence,int,Need more information.
+public,dev,la_area_type,PK,area_type_code,"char(1),",area type code.
+public,dev,la_area_type,null,areatype_text,varchar,area type text
+public,dev,la_measure,PK,measure_code,"char(2),",Measure code.
+public,dev,la_measure,null,measure_text,varchar,Type of measure for unemployment.
