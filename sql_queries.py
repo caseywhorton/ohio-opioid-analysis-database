@@ -19,6 +19,7 @@ drop table if exists drug_list;
 drop table if exists pharm_location;
 drop table if exists county_pop;
 drop table if exists ohio_county;
+drop table if exists unemployment_rate;
 """
 
 # queries
@@ -270,7 +271,7 @@ create table if not exists cw_area
    display_level varchar,
    selectable varchar,
    sort_sequence int,
-   PRIMARY KEY(area_code)
+   PRIMARY KEY (area_code)
 )
 """
 
@@ -296,7 +297,7 @@ create table if not exists la_area
    selectable varchar,
    sort_sequence int,
    PRIMARY KEY (area_code),
-   CONSTRAINT fk_la_area_type FOREIGN KEY (area_type_code) REFERENCES la_area_type(area_type_code),
+   CONSTRAINT fk_la_area_type FOREIGN KEY (area_type_code) REFERENCES la_area_type(area_type_code)
 )
 """
 
@@ -473,8 +474,8 @@ create_table_queries = [create_table_expenditure_codes,
                         create_table_candsummary,
                         create_table_candcontrib,
                         create_table_drug_list,
-                        create_table_county_pop,
                         create_table_ohio_county,
+                        create_table_county_pop,
                         create_table_pharm_location,
                         create_table_buyer_address,
                         create_table_reporter_address,
