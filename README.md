@@ -191,7 +191,7 @@ transaction_date|countyfips|buyer_county|buyer_bus_act|reporter_bus_act|populati
 2012008|39001|ADAMS|RETAIL PHARMACY|DISTRIBUTOR|28524
 2012012|39001|ADAMS|CHAIN PHARMACY|DISTRIBUTOR|28524
 
-# References:
+# References
 
 [Getting started with Bureau of labor statistics API](https://stats.bls.gov/developers/)  
 [Individual Series ID formats for Bureau of labor statistics API](https://stats.bls.gov/help/hlpforma.htm#LA)  
