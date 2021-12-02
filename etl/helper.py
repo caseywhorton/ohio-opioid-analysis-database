@@ -332,3 +332,11 @@ def check_expected_rows(table_name, cur, conn, exp_num_rows):
     obs_num_rows = cur.fetchone()[0]
     assert obs_num_rows == exp_num_rows, "Mismatched row count. Expected {}, observed {}.".format(exp_num_rows, obs_num_rows)
     print('Checks passed, row counts match.')
+    
+
+def clean_overdose_data_file(filepath):
+    df = pd.read_csv(filepath, sep = '\t')
+    df.drop('Notes', axis=1, inplace=True)
+    df.dropna(axis=0, how = 'all', thresh=None, subset=None, inplace=True)
+    df.columns = [x.replace(' ','_').replace('/','_') for x in df.columns]
+    return(df)
