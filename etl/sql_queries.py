@@ -20,6 +20,8 @@ drop table if exists pharm_location;
 drop table if exists county_pop;
 drop table if exists ohio_county;
 drop table if exists unemployment_rate;
+drop table if exists ohio_congress_county;
+drop table if exists overdose;
 """
 
 # queries
@@ -35,6 +37,34 @@ where left(distidrunfor,2) = 'OH' and right(metadata_sheet,4) between 2006 and 2
 
 # create table statements
 ##############################################
+create_table_ohio_congress_county = """
+create table if not exists ohio_congress_county
+(
+record_no int,
+distid char(5),
+county varchar,
+start int,
+end int
+)
+"""
+
+create_table_overdose = """
+create table if not exists overdose
+(
+County varchar,
+County_Code int,
+Year int,
+Year_code int,
+Month varchar,
+Month_Code varchar,
+Drug_Alcohol_Induced_Cause varchar,
+Drug_Alcohol_Induced_Cause_Code varchar,
+Deaths int,
+Population varchar,
+Crude_Rate varchar
+)
+"""
+
 create_table_candcontrib = """
 create table if not exists candcontrib
 (
@@ -465,7 +495,9 @@ county_raw_cols = ['REPORTER_DEA_NO',
                    'dos_str']
 
 ##############################################
-create_table_queries = [create_table_expenditure_codes,
+create_table_queries = [create_table_overdose,
+                        create_table_ohio_congress_county,
+                        create_table_expenditure_codes,
                         create_table_committee,
                         create_table_crp_member,
                         create_table_crp_industry_codes,
