@@ -68,6 +68,22 @@ def main():
         
         # data quality check that table is not empty
         helper.check_greater_than_zero(key, cur, conn)
+       
+    # copy overdose data
+    query = sql_queries.copy_csv_data.format("overdose",
+                                     "s3://ohio-opioid-support-bucket/ohio_overdose_1999_2019.csv",
+                                     params['iam_role'])
+    
+    cur.execute(query)
+    conn.commit()
+    
+    # copy ohio congress county
+    query = sql_queries.copy_csv_data.format("ohio_congress_county",
+                                     "s3://ohio-opioid-support-bucket/ohio_congress_id_county.csv",
+                                     params['iam_role'])
+    
+    cur.execute(query)
+    conn.commit()
     
     print('Calling APIs and inserting data into database...')
     
