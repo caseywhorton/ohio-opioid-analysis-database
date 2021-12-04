@@ -14,7 +14,6 @@ drop table if exists candcontrib;
 drop table if exists candsummary;
 drop table if exists buyer_address;
 drop table if exists reporter_address;
-drop table if exists county_raw;
 drop table if exists drug_list;
 drop table if exists pharm_location;
 drop table if exists county_pop;
