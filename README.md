@@ -1,6 +1,9 @@
-
-<img src="images/towfiqu-barbhuiya-uM5mnbNm8eA-unsplash.jpg" width="450" height="200">
+<p align="center">
+  <img src="images/towfiqu-barbhuiya-uM5mnbNm8eA-unsplash.jpg" width="450" height="200"> 
+</p>
+<p align = "center">
 Photo by <a href="https://unsplash.com/@towfiqu999999?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Towfiqu barbhuiya</a> on <a href="https://unsplash.com/s/photos/pills?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+</p?
 
 # ohio-opioid-analysis-database
 ---
@@ -94,7 +97,9 @@ The files in the repo should all be saved to the same directory. After navigatin
 
 Status updates and any error information will show up in the terminal. If the entire program runs without issue, you should see something like the image below:
 
-<img src="images/database_etl_completion.PNG" width="800" height="350">
+<p align = "center">
+  <img src="images/database_etl_completion.PNG" width="800" height="350">
+</p>
 
 # Files
 
@@ -157,8 +162,10 @@ Run `etl.py` in the command line:
 
 Connect to Redshift >> Drop tables >> Create tables >> Copy from S3 to Redshift >> Call APIs & Return Data >> Insert data to Redshift
 
-<img src="images/ohio opioid etl process overview.PNG" width="700" height="350">
-
+<p align="center">
+  <img src="images/ohio opioid etl process overview.PNG" width="700" height="350">
+</p>
+  
 ## ETL Data Quality Checks
 
 The code has two data quality checks that data must pass. Tables in the database that are the result of `Copy` statements must be non-empty, and we accomplish this using the `check_greater_than_zero` function in the _helper_ module. Tables in the database that are the result of API calls are checked using the `check_expected_rows` to validate that the expected number of rows are written to the table. You can see the results of the checks during the ETL process by viewing the output in the terminal.
@@ -209,6 +216,18 @@ transaction_date|countyfips|buyer_county|buyer_bus_act|reporter_bus_act|populati
 # Data Dictionary and Database Design
 
 The full, downloadable version of the data dictionary can be found in the repo [in this location](https://github.com/caseywhorton/ohio-opioid-analysis-database/blob/main/Database/Ohio%20Opioid%20Database%20Data%20Dictionary.csv).  
+
+
+
+<p align="center">
+  <img src="images/Ohio Opioid Database Relational Schema Version 1_1.png" width="800" height="500">  
+</p>
+
+<p align="center">
+  Author created image using diagram creation software at: https://erdplus.com/.
+</p>
+
+
 Below are descriptions of the individual tables.
 
 **candcontrib**: Top contributors to a candidate during a cycle.
