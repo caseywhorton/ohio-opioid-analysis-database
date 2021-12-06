@@ -14,6 +14,7 @@ drop table if exists candcontrib;
 drop table if exists candsummary;
 drop table if exists buyer_address;
 drop table if exists reporter_address;
+drop table if exists county_raw;
 drop table if exists drug_list;
 drop table if exists pharm_location;
 drop table if exists county_pop;
@@ -65,20 +66,7 @@ Crude_Rate varchar
 """
 
 
-create_table_candcontrib = """
-create table if not exists candcontrib
-(
-    cid varchar NOT NULL,
-    cycle int,
-    origin varchar,
-    source varchar,
-    notice varchar,
-    org_name varchar,
-    total int,
-    pacs int,
-    indivs int
-)
-"""
+
 
 create_table_buyer_address = """
 create table if not exists buyer_address
@@ -188,12 +176,14 @@ create table if not exists county_pop
 create_table_candidate = """
 create table if not exists candidate
 (
+    cid_cycle NOT NULL,
     CID varchar NOT NULL,
     CRPName varchar,
     Party varchar,
     DistIDRunFor varchar,
     FECCandID varchar,
-    metadata_sheet varchar
+    metadata_sheet varchar,
+    PRIMARY KEY (cid_cycle)
 );
 """
 
@@ -206,19 +196,22 @@ create table if not exists crp_industry_codes
     Industry varchar,
     Sector varchar,
     SectorLong varchar,
-    metadata_sheet varchar
+    metadata_sheet varchar,
+    PRIMARY KEY (Catcode)
 );
 """
 
 create_table_crp_member = """
 create table if not exists crp_member
 (
+    cid_congress varchar NOT NULL,
     CID varchar NOT NULL,
     CRPName varchar,
     Party varchar,
     Office varchar,
     FECCandID varchar,
-    metadata_sheet varchar
+    metadata_sheet varchar,
+    PRIMARY KEY (cid_congress)
 );
 """
 
@@ -227,7 +220,8 @@ create table if not exists committee
 (
     CODE varchar,
     CmteName varchar,
-    metadata_sheet varchar
+    metadata_sheet varchar,
+    PRIMARY KEY (CODE)
 );
 """
 
@@ -239,13 +233,32 @@ create table if not exists expenditure_codes
     DescripLong varchar,
     Sector varchar,
     SectorName varchar,
-    metadata_sheet varchar
+    metadata_sheet varchar,
+    PRIMARY KEY (ExpCode)
 );
+"""
+
+create_table_candcontrib = """
+create table if not exists candcontrib
+(
+    cid_cycle NOT NULL,
+    cid varchar NOT NULL,
+    cycle int,
+    origin varchar,
+    source varchar,
+    notice varchar,
+    org_name varchar,
+    total int,
+    pacs int,
+    indivs int,
+    CONSTRAINT fk_candcontrib FOREIGN KEY cid_cycle REFERENCES candidate(cid_cycle)
+)
 """
 
 create_table_candIndByInd = """
 create table if not exists candIndbyInd
 (
+    cid_cycle varchar NOT NULL,
     cid varchar NOT NULL,
     cycle int,
     industry varchar,
@@ -258,13 +271,15 @@ create table if not exists candIndbyInd
     rank int,
     origin varchar,
     source varchar, 
-    last_updated date
+    last_updated date,
+    CONSTRAINT fk_candindbyind FOREIGN KEY cid_cycle REFERENCES candidate(cid_cycle)
 )
 """
 
 create_table_candsummary = """
 create table if not exists candsummary
 (
+    cid_cycle varchar NOT NULL,
     cid varchar NOT NULL,
     cycle varchar,
     state varchar,
@@ -278,7 +293,8 @@ create table if not exists candsummary
     debt decimal,
     origin varchar,
     source varchar,
-    last_updated date
+    last_updated date,
+    CONSTRAINT fk_candsummary FOREIGN KEY cid_cycle REFERENCES candidate(cid_cycle)
 )
 """
 
