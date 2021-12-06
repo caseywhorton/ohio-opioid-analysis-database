@@ -113,6 +113,8 @@ def main():
         try:
             df = helper.opensecrets_candindbyind(cid,year,'H04', params['opensecrets_api_key'])
             df.drop('cand_name',axis=1,inplace=True)
+            cid_cycle = df.cid + df.cycle
+            df.insert(0, 'cid_cycle', cid_cycle)
             df_list.append(df)
         except:
             pass
@@ -136,6 +138,8 @@ def main():
         try:
             df = df.replace('',0)
             df.drop('cand_name',axis=1,inplace=True)
+            cid_cycle = df.cid + df.cycle
+            df.insert(0, 'cid_cycle', cid_cycle)
             df_list.append(df)
         except:
             pass
@@ -158,6 +162,8 @@ def main():
         df = helper.opensecrets_candcontrib(cid, year, params['opensecrets_api_key'])
         try:
             df.drop('cand_name',axis=1,inplace=True)
+            cid_cycle = df.cid + df.cycle
+            df.insert(0, 'cid_cycle', cid_cycle)
             df_list.append(df)
         except:
             pass
