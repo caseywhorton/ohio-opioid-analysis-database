@@ -216,18 +216,6 @@ def main():
     # data quality check that table has number of expected rows
     helper.check_expected_rows("county_pop", cur, conn, len(df))
     
-    # drug list table from arcos dataset
-    
-    df = helper.drug_list(key=params['arcos_api_key'])
-    
-    for i, row in tqdm(df.iterrows(), total = len(df), desc = 'Inserting Rows to drug_list'):
-        cur.execute(sql_queries.insert_table_drug_list, list(row))
-       
-    conn.commit()
-    
-    # data quality check that table has number of expected rows
-    helper.check_expected_rows("drug_list", cur, conn, len(df))
-    
     # pharmacy location data from arcos dataset
     
     df_list = list()
