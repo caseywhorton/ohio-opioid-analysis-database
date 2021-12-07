@@ -220,7 +220,7 @@ The full, downloadable version of the data dictionary can be found in the repo [
 
 
 <p align="center">
-  <img src="images/Ohio Opioid Database Relational Schema Version 1_1.png" width="800" height="500">  
+  <img src="images/Ohio Opioid Database Relational Schema Version 1_2.png" width="800" height="500">  
 </p>
 
 <p align="center">
