@@ -15,7 +15,6 @@ drop table if exists candsummary;
 drop table if exists buyer_address;
 drop table if exists reporter_address;
 drop table if exists county_raw;
-drop table if exists drug_list;
 drop table if exists pharm_location;
 drop table if exists county_pop;
 drop table if exists ohio_county;
@@ -65,9 +64,6 @@ population varchar,
 crude_rate varchar
 )
 """
-
-
-
 
 create_table_buyer_address = """
 create table if not exists buyer_address
@@ -131,13 +127,6 @@ create table if not exists county_raw
     dos_str decimal,
     CONSTRAINT fk_reporter_dea_no FOREIGN KEY(REPORTER_DEA_NO) REFERENCES reporter_address(REPORTER_DEA_NO),
     CONSTRAINT fk_buyer_dea_no FOREIGN KEY(BUYER_DEA_NO) REFERENCES buyer_address(BUYER_DEA_NO)
-)
-"""
-
-create_table_drug_list = """
-create table if not exists drug_list
-(
-    DRUG_NAME varchar not null
 )
 """
 
@@ -400,6 +389,7 @@ IGNOREHEADER 1
 EMPTYASNULL
 region 'us-west-2';
 """
+
 # insert table statements
 ##############################################
 insert_table_candindbyind = """
@@ -427,11 +417,6 @@ VALUES (%s ,%s ,%s)
 insert_table_county_pop = """
 INSERT INTO county_pop (countyfips, STATE, COUNTY, variable, year, population)
 VALUES (%s ,%s ,%s ,%s , %s, %s)
-"""
-
-insert_table_drug_list = """
-INSERT INTO drug_list (DRUG_NAME)
-VALUES (%s)
 """
 
 insert_table_pharm_location = """
@@ -532,7 +517,6 @@ create_table_queries = [create_table_expenditure_codes,
                         create_table_candIndByInd,
                         create_table_candsummary,
                         create_table_candcontrib,
-                        create_table_drug_list,
                         create_table_ohio_county,
                         create_table_county_pop,
                         create_table_pharm_location,
