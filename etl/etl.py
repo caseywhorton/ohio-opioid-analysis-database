@@ -91,6 +91,10 @@ def main():
     
     series_list = helper.return_ohio_series_list()
     df = helper.get_bls_data(series_list, 2006, 2014)
+    area_code = df['series id'].apply(lambda x: x[3:18])
+    measure_code = df['series id'].apply(lambda x: x[18:20])
+    df.insert(1, 'area_code', area_code)
+    df.insert(2, 'measure_code', measure_code)
     
     for i, row in tqdm(df.iterrows(), total = len(df), desc = 'Inserting Rows to unemployment_rate'):
         cur.execute(sql_queries.insert_table_unemployment_rate, list(row))
