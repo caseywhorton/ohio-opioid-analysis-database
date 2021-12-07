@@ -217,8 +217,6 @@ transaction_date|countyfips|buyer_county|buyer_bus_act|reporter_bus_act|populati
 
 The full, downloadable version of the data dictionary can be found in the repo [in this location](https://github.com/caseywhorton/ohio-opioid-analysis-database/blob/main/Database/Ohio%20Opioid%20Database%20Data%20Dictionary.csv).  
 
-
-
 <p align="center">
   <img src="images/Ohio Opioid Database Relational Schema Version 1_3.png" width="800" height="500">  
 </p>
@@ -227,19 +225,19 @@ The full, downloadable version of the data dictionary can be found in the repo [
   Author created image using diagram creation software at: https://erdplus.com/.
 </p>
 
-
-Below are descriptions of the individual tables.
+_Descriptions of the individual tables:_
 
 **candcontrib**: Top contributors to a candidate during a cycle.
 
 Type | Column | Type
 -----|--------|------
-null | cid | varchar,
-null | cycle | int,
-null | origin | varchar,
-null | source | varchar,
-null | notice | varchar,
-null | org_name | varchar,
+FK | cid_cycle | varchar
+null | cid | varchar
+null | cycle | int
+null | origin | varchar
+null | source | varchar
+null | notice | varchar
+null | org_name | varchar
 null | total | int,
 null | pacs | int,
 null | indivs | int
@@ -249,6 +247,7 @@ null | indivs | int
 
 Type | Column | Type
 -----|--------|------
+FK | cid_cycle | varchar
 null | cid | varchar,
 null | cycle | int,
 null | industry | varchar,
@@ -263,11 +262,11 @@ null | origin | varchar,
 null | source | varchar, 
 null | last_updated | date
 
-
 **candsummary**: Aggregated summary of contributions to a candidate during a cycle.
 
 Type | Column | Type
 -----|--------|------
+FK | cid_cycle | varchar
 null | cid | varchar,
 null | cycle | varchar,
 null | state | varchar,
@@ -282,7 +281,6 @@ null | debt | decimal,
 null | origin | varchar,
 null | source | varchar,
 null | last_updated | date
-
 
 **buyer_address**: Dimension table for the buyers in the ARCOS dataset.
 
@@ -299,7 +297,6 @@ null | BUYER_ZIP | int,
 null | BUYER_COUNTY | varchar,
 null | BUYER_ADDL_CO_INFO | varchar,
 
-
 **reporter_address**: Dimension table for the reporters in the ARCOS dataset.
 
 Type | Column | Type
@@ -313,7 +310,6 @@ null | REPORTER_CITY | varchar,
 null | REPORTER_STATE | char(2),
 null | REPORTER_ZIP | int,
 null | REPORTER_COUNTY | varchar,
-
 
 **county_raw**: Ohio county-level data for opioid buying and reporting.
 
@@ -344,14 +340,6 @@ null | Revised_Company_Name | varchar,
 null | Reporter_family | varchar,
 null | dos_str | decimal,
 
-
-**drug_list**: A list of drug names in the dataset.
-
-Type | Column | Type
------|--------|------
-PK | DRUG_NAME | varchar
-
-
 **pharm_location**: Latitude and longitude for pharmacy locations.
 
 Type | Column | Type
@@ -360,8 +348,6 @@ PK | BUYER_DEA_NO | varchar
 null | lat | decimal,
 null | lon | decimal,
 
-
-
 **ohio_county**: List of ohio counties with 'fips' codes.
 
 Type | Column | Type
@@ -369,7 +355,6 @@ Type | Column | Type
 null | BUYER_COUNTY | varchar,
 null | BUYER_STATE | char(2),
 PK | countyfips | int
-
 
 **county_pop**: Population of counties in ohio.
 
@@ -382,24 +367,24 @@ null | variable | varchar,
 null | year | varchar,
 null | population | int
 
-
 **candidate**: All candidates from the openSecrets Excel file.
 
 Type | Column | Type
 -----|--------|------
+PK | cid_cycle | varchar
 null | CID | varchar,
 null | CRPName | varchar,
 null | Party | varchar,
 null | DistIDRunFor | varchar,
 null | FECCandID | varchar,
 null | metadata_sheet | varchar
-
+null | cycle | int
 
 **crp_industry_codes**: Dimension table for industry codes and what industry they represent.
 
 Type | Column | Type
 -----|--------|------
-null | Catcode | varchar,
+PK | Catcode | varchar,
 null | Catname | varchar,
 null | Carorder | varchar,
 null | Industry | varchar,
@@ -407,33 +392,32 @@ null | Sector | varchar,
 null | SectorLong | varchar,
 null | metadata_sheet | varchar
 
-
 **crp_member**: All members of the house or senate by cycle (year).
 
 Type | Column | Type
 -----|--------|------
-null | CID | varchar,
-null | CRPName | varchar,
-null | Party | varchar,
-null | Office | varchar,
-null | FECCandID | varchar,
+PK   | cid_congress | varchar
+null | CID | varchar
+null | CRPName | varchar
+null | Party | varchar
+null | Office | varchar
+null | FECCandID | varchar
 null | metadata_sheet | varchar
-
+null | congress | int
 
 **committee**: Dimensional table for committees with a code as reference.
 
 Type | Column | Type
 -----|--------|------
-null | CODE | varchar,
+PK | CODE | varchar,
 null | CmteName | varchar,
 null | metadata_sheet | varchar
-
 
 **expenditure_codes**: Dimensional table for types of expenditures.
 
 Type | Column | Type
 -----|--------|------
-null | ExpCode | varchar,
+PK | ExpCode | varchar,
 null | DescripShort | varchar,
 null | DescripLong | varchar,
 null | Sector | varchar,
@@ -444,12 +428,13 @@ null | metadata_sheet | varchar
 
 Type | Column | Type
 -----|--------|------
-null | series_id | varchar,
-null | year | int,
-null | period | char(3),
-null | value | decimal,
+null | series_id | varchar
+FK | area_code | char(15)
+FK | measure_code | char(2)
+null | year | int
+null | period | char(3)
+null | value | decimal
 null | footnotes | varchar
-
 
 **cw_area**: Dimensional table that gives area code detail for the Bureau of Labor Statistics API.
 
