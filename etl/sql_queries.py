@@ -4,7 +4,6 @@
 ##############################################
 drop_tables = """
 drop table if exists county_raw;
-drop table if exists candidate;
 drop table if exists committee;
 drop table if exists crp_industry_codes;
 drop table if exists crp_member;
@@ -12,6 +11,7 @@ drop table if exists expenditure_codes;
 drop table if exists candIndbyInd;
 drop table if exists candcontrib;
 drop table if exists candsummary;
+drop table if exists candidate;
 drop table if exists buyer_address;
 drop table if exists reporter_address;
 drop table if exists county_raw;
@@ -64,6 +64,7 @@ population varchar,
 crude_rate varchar
 )
 """
+
 
 create_table_buyer_address = """
 create table if not exists buyer_address
@@ -166,13 +167,14 @@ create table if not exists county_pop
 create_table_candidate = """
 create table if not exists candidate
 (
-    cid_cycle NOT NULL,
+    cid_cycle varchar NOT NULL,
     CID varchar NOT NULL,
     CRPName varchar,
     Party varchar,
     DistIDRunFor varchar,
     FECCandID varchar,
     metadata_sheet varchar,
+    cycle int,
     PRIMARY KEY (cid_cycle)
 );
 """
@@ -201,6 +203,7 @@ create table if not exists crp_member
     Office varchar,
     FECCandID varchar,
     metadata_sheet varchar,
+    congress int,
     PRIMARY KEY (cid_congress)
 );
 """
@@ -223,15 +226,14 @@ create table if not exists expenditure_codes
     DescripLong varchar,
     Sector varchar,
     SectorName varchar,
-    metadata_sheet varchar,
-    PRIMARY KEY (ExpCode)
+    metadata_sheet varchar
 );
 """
 
 create_table_candcontrib = """
 create table if not exists candcontrib
 (
-    cid_cycle NOT NULL,
+    cid_cycle varchar NOT NULL,
     cid varchar NOT NULL,
     cycle int,
     origin varchar,
@@ -241,7 +243,7 @@ create table if not exists candcontrib
     total int,
     pacs int,
     indivs int,
-    CONSTRAINT fk_candcontrib FOREIGN KEY cid_cycle REFERENCES candidate(cid_cycle)
+    CONSTRAINT fk_candcontrib FOREIGN KEY (cid_cycle) REFERENCES candidate(cid_cycle)
 )
 """
 
@@ -262,7 +264,7 @@ create table if not exists candIndbyInd
     origin varchar,
     source varchar, 
     last_updated date,
-    CONSTRAINT fk_candindbyind FOREIGN KEY cid_cycle REFERENCES candidate(cid_cycle)
+    CONSTRAINT fk_candindbyind FOREIGN KEY (cid_cycle) REFERENCES candidate(cid_cycle)
 )
 """
 
@@ -284,7 +286,7 @@ create table if not exists candsummary
     origin varchar,
     source varchar,
     last_updated date,
-    CONSTRAINT fk_candsummary FOREIGN KEY cid_cycle REFERENCES candidate(cid_cycle)
+    CONSTRAINT fk_candsummary FOREIGN KEY (cid_cycle) REFERENCES candidate(cid_cycle)
 )
 """
 
@@ -389,7 +391,6 @@ IGNOREHEADER 1
 EMPTYASNULL
 region 'us-west-2';
 """
-
 # insert table statements
 ##############################################
 insert_table_candindbyind = """
