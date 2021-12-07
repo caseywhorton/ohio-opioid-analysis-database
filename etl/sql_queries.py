@@ -302,6 +302,8 @@ create_table_unemployment_rate = """
 create table if not exists unemployment_rate
 (
     series_id varchar NOT NULL,
+    area_code char(15),
+    measure_code char(2),
     year int,
     period char(3),
     value decimal,
@@ -464,8 +466,8 @@ VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
 """
 
 insert_table_unemployment_rate = """
-INSERT INTO unemployment_rate (series_id, year, period, value, footnotes)
-VALUES (%s, %s, %s, %s, %s)
+INSERT INTO unemployment_rate (series_id, area_code, measure_code, year, period, value, footnotes)
+VALUES (%s, %s, %s, %s, %s, %s, %s)
 """
 
 # column name lists
