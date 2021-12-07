@@ -51,17 +51,18 @@ create table if not exists ohio_congress_county
 create_table_overdose = """
 create table if not exists overdose
 (
-County varchar,
-County_Code decimal,
-Year decimal,
-Year_code decimal,
-Month varchar,
-Month_Code varchar,
-Drug_Alcohol_Induced_Cause varchar,
-Drug_Alcohol_Induced_Cause_Code varchar,
-Deaths decimal,
-Population varchar,
-Crude_Rate varchar
+county varchar,
+state char(2),
+county_code decimal,
+year decimal,
+year_code decimal,
+month varchar,
+month_code varchar,
+drug_alcohol_induced_cause varchar,
+drug_alcohol_induced_cause_code varchar,
+deaths decimal,
+population varchar,
+crude_rate varchar
 )
 """
 
