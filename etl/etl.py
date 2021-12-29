@@ -85,6 +85,14 @@ def main():
     cur.execute(query)
     conn.commit()
     
+    # congress years
+    
+    cur.execute(sql_queries.insert_table_congress_years)
+    conn.commit()
+    
+    # data quality check that table has number of expected rows
+    helper.check_expected_rows("congress_years", cur, conn, 12)
+    
     print('Calling APIs and inserting data into database...')
     
     # Unemployment rate from bureau of labor statistics
@@ -114,14 +122,15 @@ def main():
     df_list = list()
     for result in tqdm(ohio_candidates, desc = 'candIndByInd'):
         cid, year = result
-        try:
-            df = helper.opensecrets_candindbyind(cid,year,'H04', params['opensecrets_api_key'])
-            df.drop('cand_name',axis=1,inplace=True)
-            cid_cycle = df.cid + df.cycle
-            df.insert(0, 'cid_cycle', cid_cycle)
-            df_list.append(df)
-        except:
-            pass
+        for ind_code in ['H01','H02','H03','H04','H05']:
+            try:
+                df = helper.opensecrets_candindbyind(cid,year,ind_code, params['opensecrets_api_key'])
+                df.drop('cand_name',axis=1,inplace=True)
+                cid_cycle = df.cid + df.cycle
+                df.insert(0, 'cid_cycle', cid_cycle)
+                df_list.append(df)
+            except:
+                pass
        
     df = pd.concat(df_list)
     
@@ -278,6 +287,11 @@ def main():
     
     # data quality check that table has number of expected rows
     helper.check_expected_rows("reporter_address", cur, conn, len(df))
+
+    
+    for view in sql_queries.create_view_queries:
+        cur.execute(view)
+        conn.commit()
     
 if __name__ == "__main__":
     main()
