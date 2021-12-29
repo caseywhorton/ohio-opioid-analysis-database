@@ -3,39 +3,58 @@
 # drop table statements
 ##############################################
 drop_tables = """
-drop table if exists county_raw;
-drop table if exists committee;
-drop table if exists crp_industry_codes;
-drop table if exists crp_member;
-drop table if exists expenditure_codes;
-drop table if exists candIndbyInd;
-drop table if exists candcontrib;
-drop table if exists candsummary;
-drop table if exists candidate;
-drop table if exists buyer_address;
-drop table if exists reporter_address;
-drop table if exists county_raw;
-drop table if exists pharm_location;
-drop table if exists county_pop;
-drop table if exists ohio_county;
-drop table if exists unemployment_rate;
-drop table if exists overdose;
-drop table if exists ohio_congress_county;
+drop table if exists county_raw CASCADE;
+drop table if exists committee CASCADE;
+drop table if exists crp_industry_codes CASCADE;
+drop table if exists crp_member CASCADE;
+drop table if exists expenditure_codes CASCADE;
+drop table if exists candIndbyInd CASCADE;
+drop table if exists candcontrib CASCADE;
+drop table if exists candsummary CASCADE;
+drop table if exists candidate CASCADE;
+drop table if exists buyer_address CASCADE;
+drop table if exists reporter_address CASCADE;
+drop table if exists pharm_location CASCADE;
+drop table if exists county_pop CASCADE;
+drop table if exists ohio_county CASCADE;
+drop table if exists unemployment_rate CASCADE;
+drop table if exists overdose CASCADE;
+drop table if exists ohio_congress_county CASCADE;
+drop table if exists congress_years CASCADE;
+drop view if exists drug_counts;
+drop view if exists district_quantity_vw;
+drop view if exists district_industry;
+drop view if exists district_population_vw;
+drop view if exists countyrep_vw;
+drop view if exists overdose_yr_vw;
+drop view if exists candidate_countyrunfor_vw;
 """
 
 # queries
 ##############################################
 ohio_candidate_query = """
 select 
-    distinct(cid),
-    right(metadata_sheet,4)
-from candidate
-where left(distidrunfor,2) = 'OH' and right(metadata_sheet,4) between 2006 and 2014
-;
+    distinct(m.cid),
+    y.startyear
+from crp_member as m
+join congress_years as y
+on m.congress = y.congress
+where left(m.office,2) = 'OH';
 """
 
 # create table statements
 ##############################################
+
+create_table_congress_years = """
+create table congress_years
+(
+  congress int not null,
+  cycle int not null,
+  startyear int not null,
+  endyear int not null
+)
+"""
+
 create_table_ohio_congress_county = """
 create table if not exists ohio_congress_county
 (
@@ -394,20 +413,20 @@ region 'us-west-2';
 # insert table statements
 ##############################################
 insert_table_candindbyind = """
-INSERT INTO candindbyind (cid, cycle, industry, chamber, party, state,
+INSERT INTO candindbyind (cid_cycle, cid, cycle, industry, chamber, party, state,
        total, indivs, pacs, rank, origin, source, last_updated)
-VALUES (%s ,%s ,%s,%s,%s,%s,%s,%s ,%s ,%s ,%s , %s, %s)
+VALUES (%s, %s ,%s ,%s,%s,%s,%s,%s,%s ,%s ,%s ,%s , %s, %s)
 """
 
 insert_table_candsummary = """
-INSERT INTO candsummary (cid, cycle, state, party, chamber, first_elected,
+INSERT INTO candsummary (cid_cycle, cid, cycle, state, party, chamber, first_elected,
        next_election, total, spent, cash_on_hand, debt, origin, source, last_updated)
-VALUES (%s ,%s ,%s, %s, %s, %s, %s, %s ,%s ,%s ,%s , %s, %s, %s)
+VALUES (%s, %s ,%s ,%s, %s, %s, %s, %s, %s ,%s ,%s ,%s , %s, %s, %s)
 """
 
 insert_table_candcontrib = """
-INSERT INTO candcontrib (cid, cycle, origin, source, notice, org_name, total, pacs, indivs)
-VALUES (%s ,%s , %s, %s, %s, %s, %s, %s, %s)
+INSERT INTO candcontrib (cid_cycle, cid, cycle, origin, source, notice, org_name, total, pacs, indivs)
+VALUES (%s, %s ,%s , %s, %s, %s, %s, %s, %s, %s)
 """
 
 insert_table_ohio_county = """
@@ -455,6 +474,22 @@ VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
 insert_table_unemployment_rate = """
 INSERT INTO unemployment_rate (series_id, area_code, measure_code, year, period, value, footnotes)
 VALUES (%s, %s, %s, %s, %s, %s, %s)
+"""
+
+insert_table_congress_years = """
+insert into congress_years VALUES
+(106,	1998,	1999,	2000),
+(107,	2000,	2001,	2002),
+(108,	2002,	2003,	2004),
+(109,	2004,	2005,	2006),
+(110,	2006,	2007,	2008),
+(111,	2008,	2009,	2010),
+(112,	2010,	2011,	2012),
+(113,	2012,	2013,	2014),
+(114,	2014,	2015,	2016),
+(115,	2016,	2017,	2018),
+(116,	2018,	2019,	2020),
+(117,	2020,	2021,	2022)
 """
 
 # column name lists
@@ -531,9 +566,80 @@ create_table_queries = [create_table_expenditure_codes,
                         create_table_cw_area,
                         create_table_cu_item,
                         create_table_overdose,
-                        create_table_ohio_congress_county
+                        create_table_ohio_congress_county,
+                        create_table_congress_years
                        ]
 
+##############################################
+#create_views = 
+
+create_view_drug_counts = """
+CREATE OR REPLACE VIEW "public"."drug_counts" AS  SELECT "left"(county_raw.transaction_date::character varying::text, len(county_raw.transaction_date::character varying::text) % 6) AS "month", "left"("right"(county_raw.transaction_date::character varying::text, 6), 2) AS "day", "right"(county_raw.transaction_date::character varying::text, 4) AS "year", county_raw.drug_name, county_raw.product_name, county_raw.dos_str, sum(county_raw.quantity) AS quantity
+   FROM county_raw
+  GROUP BY "left"(county_raw.transaction_date::character varying::text, len(county_raw.transaction_date::character varying::text) % 6), "left"("right"(county_raw.transaction_date::character varying::text, 6), 2), "right"(county_raw.transaction_date::character varying::text, 4), county_raw.drug_name, county_raw.product_name, county_raw.dos_str;
+"""
+
+create_view_district_quantity_vw = """
+CREATE OR REPLACE VIEW "public"."district_quantity_vw" AS  SELECT "right"(county_raw.transaction_date::text, 4) AS "year", ohio_congress_county.distid, sum(county_raw.quantity) AS quantity
+   FROM county_raw
+   JOIN buyer_address ON county_raw.buyer_dea_no::text = buyer_address.buyer_dea_no::text
+   JOIN ohio_congress_county ON lower(buyer_address.buyer_county::text) = ohio_congress_county.county::text
+  GROUP BY "right"(county_raw.transaction_date::text, 4), ohio_congress_county.distid
+  ORDER BY "right"(county_raw.transaction_date::text, 4), ohio_congress_county.distid;
+"""
+
+create_view_district_industry = """
+CREATE OR REPLACE VIEW "public"."district_industry" AS  SELECT cte."cycle", cte.congress_startyear, cte.cid, cte.distid, c.industry, c.chamber, c.party, c.total, c.indivs, c.pacs
+   FROM ( SELECT countyrep_vw."cycle", countyrep_vw.congress_startyear, countyrep_vw.cid, countyrep_vw.distid
+           FROM countyrep_vw
+          GROUP BY countyrep_vw."cycle", countyrep_vw.congress_startyear, countyrep_vw.cid, countyrep_vw.distid) cte
+   JOIN candindbyind c ON cte.cid::text = c.cid::text AND cte."cycle" = c."cycle";
+"""
+
+create_view_district_population_vw = """
+CREATE OR REPLACE VIEW "public"."district_population_vw" AS  SELECT cte.distid, cte."year", sum(cte.population) AS population
+   FROM ( SELECT ohio_congress_county.distid, county_pop."year", ohio_congress_county.startyear, ohio_congress_county.endyear, county_pop.population
+           FROM ohio_congress_county
+      JOIN ohio_county ON ohio_congress_county.county::text = lower(ohio_county.buyer_county::text)
+   JOIN county_pop ON ohio_county.countyfips = county_pop.countyfips AND county_pop."year"::text >= ohio_congress_county.startyear::text AND county_pop."year"::text <= ohio_congress_county.endyear::text) cte
+  GROUP BY cte.distid, cte."year"
+  ORDER BY cte.distid, cte."year";
+"""
+
+create_view_countyrep_vw = """
+CREATE OR REPLACE VIEW "public"."countyrep_vw" AS  SELECT c.cid_cycle, c.cid, c."cycle", y.congress, o.distid, o.county, ohio_county.countyfips, y.startyear AS congress_startyear, y.endyear AS congress_endyear, o.startyear AS county_startyear, o.endyear AS county_endyear
+   FROM candidate c
+   JOIN congress_years y ON c."cycle" = y."cycle"
+   JOIN crp_member m ON m.congress = y.congress AND m.cid::text = c.cid::text
+   JOIN ohio_congress_county o ON o.distid = c.distidrunfor::character(256)
+   JOIN ohio_county ON o.county::text = lower(ohio_county.buyer_county::text)
+  WHERE c."cycle" >= o.startyear AND c."cycle" <= o.endyear;
+"""
+
+create_view_overdose_yr_vw = """
+CREATE OR REPLACE VIEW "public"."overdose_yr_vw" AS  SELECT overdose.county, overdose."year", sum(overdose.deaths) AS sum
+   FROM overdose
+  GROUP BY overdose.county, overdose."year";
+"""
+
+create_view_candidate_countyrunfor_vw = """
+CREATE OR REPLACE VIEW "public"."candidate_countyrunfor_vw" AS  SELECT c.cid_cycle, o.county AS countyrunfor
+   FROM candidate c
+   LEFT JOIN ohio_congress_county o ON c.distidrunfor::character(256) = o.distid
+  WHERE c."cycle" >= o.startyear AND c."cycle" <= o.endyear;
+"""
+
+create_view_queries = [create_view_countyrep_vw,
+                       create_view_drug_counts,
+                       create_view_district_quantity_vw,
+                       create_view_district_industry,
+                       create_view_district_population_vw,
+                       create_view_overdose_yr_vw,
+                       create_view_candidate_countyrunfor_vw
+                      ]
+                       
+
+##############################################
 # bureau of labor statistics files and table names
 
 bls_file_list = ['la.area.txt',
