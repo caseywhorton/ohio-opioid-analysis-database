@@ -3,7 +3,7 @@
 </p>
 <p align = "center">
 Photo by <a href="https://unsplash.com/@towfiqu999999?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Towfiqu barbhuiya</a> on <a href="https://unsplash.com/s/photos/pills?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-</p?
+</p>
 
 # ohio-opioid-analysis-database
 ---
