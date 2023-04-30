@@ -1,4 +1,6 @@
-# References
+This directory contains information about the Ohio congressional districts.
+
+## References
 
 https://en.wikipedia.org/wiki/Ohio%27s_congressional_districts
 
